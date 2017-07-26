@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.ScheduleJobDao">
+
+    <insert id="insert">
+        insert into scheduleJob(name,groupName,cron,beanClass,methodName,params,createTime,modifyTime,remark,isAsync,status)
+        values(#{name},#{groupName},#{cron},#{beanClass},#{methodName},#{params},#{createTime},#{modifyTime},#{remark},#{isAsync},#{status})
+    </insert>
+
+    <select id="find" resultType="ScheduleJob">
+      select * from scheduleJob
+    </select>
+    <select id="findByName" resultType="ScheduleJob">
+        select * from scheduleJob where name=#{name}
+    </select>
+
+    <select id="selectByPrimaryKey" resultType="ScheduleJob">
+      select * from scheduleJob where id=#{id}
+    </select>
+    
+    <update id="updateByPrimaryKey">
+        update scheduleJob set name=#{name},
+          groupName=#{groupName},
+          cron=#{cron},
+          beanClass=#{beanClass},
+          methodName=#{methodName},
+          params=#{params},
+          modifyTime=#{modifyTime},
+          remark = #{remark},
+          status=#{status},
+          isAsync = #{isAsync}
+         where id=#{id}
+    </update>
+    
+    <delete id="deleteByPrimaryKeys">
+        delete from scheduleJob where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+
+
+</mapper>

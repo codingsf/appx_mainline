@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.CookieDao">
+    <select id="find" resultType="Cookie">
+        select * from cookie
+    </select>
+
+    <insert id="insert">
+        insert into cookie(str,flag,createTime,useCount)
+        values(#{str},#{flag},#{createTime},0)
+    </insert>
+
+    <update id="updateByPrimaryKey">
+        update cookie set
+        str = #{str},
+        flag = #{flag},
+        modifyTime = #{modifyTime},
+        useCount = 0
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByPrimaryKeys">
+        delete from cookie where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    
+    <select id="findUse" resultType="Cookie">
+        select * from cookie
+        where flag=#{flag}
+        order by lastUseTime
+        limit 1
+    </select>
+    
+    <update id="updateUsed">
+        update cookie
+        set lastUseTime=#{lastUseTime},
+        useCount = useCount+1
+        where id=#{id}
+    </update>
+
+
+</mapper>

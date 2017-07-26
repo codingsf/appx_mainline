@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="/lib/jquery.1.8.3.min.js"></script>
+</head>
+<body>
+<a href="/">首页</a>
+<ul>
+    <li th:each="model:${articleGroupList}" th:object="${model}">
+        <a th:href="${'articleGroups/'+model.id}" th:text="${model.name}"></a>
+
+
+        <span>
+            (<span th:text="*{total}"></span>)
+        </span>
+
+        <shiro:user>
+            <th:block th:unless="*{subscribe}">
+                <a th:href="*{'javascript:subscribe('+id+',true)'}" href="">订阅</a>
+            </th:block>
+            <th:block th:if="*{subscribe}">
+                <a th:href="*{'javascript:subscribe('+id+',false)'}" href="">取消订阅</a>
+            </th:block>
+        </shiro:user>
+
+
+    </li>
+</ul>
+
+
+<script>
+    function subscribe(articleGroupId,subscribe){
+        $.post("/api/articleGroups/subscribe/"+articleGroupId,{subscribe:subscribe},null).complete(function(){
+            location.reload();
+        })
+    }
+</script>
+</body>
+</html>

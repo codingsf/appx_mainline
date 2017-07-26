@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.ArticleDao">
+    <sql id="Base_Column_List">
+        id,title,url,createTime,modifyTime,articleGroupFlag,articleGroupId,occTime
+    </sql>
+
+
+    <select id="index" resultType="Article">
+      SELECT * FROM (SELECT * FROM article ORDER BY id DESC) AS a
+        GROUP BY articleGroupId
+        ORDER BY id DESC
+    </select>
+
+    <select id="find" resultType="Article">
+        select 
+         <include refid="Base_Column_List" />
+         from article
+        order by id desc
+    </select>
+
+
+    <select id="findByArticleGroupId" resultType="Article">
+        select
+        <include refid="Base_Column_List" />
+        from article
+        where articleGroupId=#{articleGroupId}
+        order by id desc
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultType="Article">
+        select * from article where id=#{id}
+    </select>
+
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="id">
+        insert into article(title,content,createTime,modifyTime,url,articleGroupFlag,articleGroupId,occTime)
+        values(#{title},#{content},#{createTime},#{modifyTime},#{url},#{articleGroupFlag},#{articleGroupId},#{occTime})
+    </insert>
+
+
+
+    <delete id="deleteByPrimaryKeys">
+        delete from article where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    
+    <select id="exist" resultType="boolean">
+      select count(*) from(
+        select 1 from article where url=#{url}
+        or (title=#{title} and occTime=#{occTime})
+        limit 1
+      ) as a
+    </select>
+    
+    <select id="existUrl" resultType="boolean">
+        select count(*) from(
+          select 1 from article where url=#{url}
+          limit 1
+        ) as a
+    </select>
+
+</mapper>

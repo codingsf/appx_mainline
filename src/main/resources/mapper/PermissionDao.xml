@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.appx.dao.PermissionDao">
+
+
+	<select id="find" resultType="Permission">
+		select * from permission where type=1 or type=2
+	</select>
+	
+	<!--根据用户ID查询该用户所拥有的权限列表-->
+	<select id="findListPermissionByUserId" parameterType="java.lang.Long" resultType="Permission">
+		SELECT
+			*
+		FROM
+			permission p
+		WHERE
+ 			(p.type=2 or p.type=3)
+ 			AND p.id IN
+ 			(SELECT
+				rp.permissionId
+			FROM
+				rolePermission rp
+			WHERE
+				rp.roleId IN (
+					SELECT
+						ur.roleId
+					FROM
+						userRole ur
+					WHERE
+						ur.userId = #{userId}
+				)
+		);
+	</select>
+
+</mapper>

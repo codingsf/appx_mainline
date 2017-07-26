@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.CollectParamDao">
+
+    <select id="find" resultType="CollectParam">
+        select
+        *
+        from collectParam
+        order by id desc
+    </select>
+
+    <sql id="insertSql">
+         insert into collectParam(
+         twitterName,
+        listUrl,
+        articleASel,
+        titleSel,
+        timeSel,
+        contentSel,
+        articleGroupFlag,
+        type,cookieStr,lastErrorTime,lastSuccessTime,createTime,modifyTime,name,remark,cron)
+        values(#{twitterName},#{listUrl},#{articleASel},#{titleSel},#{timeSel},#{contentSel},#{articleGroupFlag},
+        #{type},#{cookieStr},#{lastErrorTime},#{lastSuccessTime},#{createTime},#{modifyTime},#{name},#{remark},#{cron})
+    </sql>
+
+    <select id="insert">
+        <include refid="insertSql" />
+    </select>
+
+
+    
+    <insert id="insertAutoSetId"  useGeneratedKeys="true" keyProperty="id">
+        <include refid="insertSql" />
+    </insert>
+    
+    
+    <update id="updateByPrimaryKey">
+        update collectParam set
+        twitterName = #{twitterName},
+        listUrl=#{listUrl},
+        articleASel = #{articleASel},
+        titleSel = #{titleSel},
+        timeSel = #{timeSel},
+        contentSel = #{contentSel},
+        articleGroupFlag = #{articleGroupFlag},
+        type = #{type},
+        cookieStr = #{cookieStr},
+        lastErrorTime = #{lastErrorTime},
+        lastSuccessTime = #{lastSuccessTime},
+        createTime = #{createTime},
+        modifyTime = #{modifyTime},
+        name = #{name},
+        remark = #{remark},
+        errorMsg = null,
+        cron = #{cron}
+        where id=#{id}
+    </update>
+
+    <update id="updateLastError">
+        update collectParam SET
+        lastErrorTime=#{lastErrorTime},
+        errorMsg = #{errorMsg}
+        where id=#{id}
+    </update>
+
+    <update id="updateLastSuccess">
+        update collectParam SET
+        lastSuccessTime=#{lastSuccessTime},
+        errorMsg = null
+        where id=#{id}
+    </update>
+
+
+
+
+    <delete id="deleteByPrimaryKeys">
+        delete from collectParam where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPrimaryKey">
+        delete from collectParam where id=#{id}
+    </delete>
+
+    <select id="selectByPrimaryKey" resultType="CollectParam">
+        select * from collectParam where id=#{id}
+    </select>
+
+
+
+</mapper>

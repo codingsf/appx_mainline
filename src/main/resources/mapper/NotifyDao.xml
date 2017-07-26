@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.NotifyDao">
+
+    <insert id="insert">
+        insert into notify(target,type,title,content,createTime,status,errorMsg)
+        values(#{target},#{type},#{title},#{content},#{createTime},#{status},#{errorMsg})
+    </insert>
+
+
+    <select id="find" resultType="Notify">
+        select
+        *
+        from notify
+        order by id desc
+    </select>
+
+
+    <delete id="deleteByPrimaryKeys">
+        delete from notify where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+</mapper>

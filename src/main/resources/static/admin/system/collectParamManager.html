@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
+    <script src="../../lib/jquery.1.8.3.min.js"></script>
+    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
+    <script src="../../lib/easyui/zeasyui1.0.js"></script>
+    <script src="../../lib/plugin_jquery.js"></script>
+    <script src="../../lib/easyui/locale/easyui-lang-zh_CN.js"></script>
+
+    <script src="collectParamManager.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center',noheader:true">
+    <table id="dg"></table>
+    <div id="d_tb" style="padding-top: 8px;padding-left:15px;display:none">
+        <div style="padding-bottom:5px">
+            <a class="easyui-linkbutton btn_add" href="javascript:;" iconCls="icon-add" plain="true">添加</a>
+            <span class="updateRecord">
+                    <a class="easyui-linkbutton btn_modify" href="javascript:;" iconCls="icon-edit" plain="true">修改</a>
+                    <a class="easyui-linkbutton btn_del" href="javascript:;" iconCls="icon-remove" plain="true">删除</a>
+                </span>
+            <a href="javascript:window.location.reload()" class="easyui-linkbutton" iconcls="icon-reload" plain="true">重载</a>
+        </div>
+        <div>
+            <form id="searchForm" action="javascript:;">
+                <input type="submit" style="display:none" />
+                昵称:<input name="nickname" class="easyui-textbox" style="width:110px" />
+                <a href="javascript:;" class="easyui-linkbutton submit" iconcls="icon-search" plain="true">查询</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--对话框-->
+<div style="display:none">
+    <!--主对话框-->
+    <div id="dlg" style="width:500px;padding:20px;">
+        <form class="mainForm" action="javascript:;">
+            <input name="id" value="0" style="display:none;" />
+            <input type="submit" style="display:none" />
+            <table>
+
+                <tr>
+                    <td>
+                        名称:
+                    </td>
+                    <td>
+                        <input name="name" class="easyui-textbox" data-options="required:true,missingMessage:'不能为空'" style="width:320px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        推特:
+                    </td>
+                    <td>
+                        <input name="twitterName" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        listUrl:
+                    </td>
+                    <td>
+                        <input name="listUrl" value="http://weixin.sogou.com/weixin?query=gh_6884e172c1bc" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td>
+                        articleASel:
+                    </td>
+                    <td>
+                        <input name="articleASel" value="a[uigs=account_article_0]" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        timeSel:
+                    </td>
+                    <td>
+                        <input name="timeSel" value="#post-date" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        titleSel:
+                    </td>
+                    <td>
+                        <input name="titleSel" value="title" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        contentSel:
+                    </td>
+                    <td>
+                        <input name="contentSel" value="#js_content" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        articleGroupFlag:
+                    </td>
+                    <td>
+                        <input name="articleGroupFlag" value="wechat_article" class="easyui-textbox" data-options="required:true,missingMessage:'不能为空'" style="width:320px" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        cron:
+                    </td>
+                    <td>
+                        <input name="cron" value="0 0/6 * * * ?" class="easyui-textbox" data-options="required:true,missingMessage:'不能为空'" style="width:320px" />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        type:
+                    </td>
+                    <td>
+
+                        <label>
+                            <input name="type" value="common" type="radio" checked="checked" />
+                            普通
+                        </label>
+
+                        <label>
+                            <input name="type"  value="wechat" type="radio" />
+                            微信
+                        </label>
+                        <label>
+                            <input name="type"  value="twitter" type="radio" />
+                            推特
+                        </label>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        cookieStr:
+                    </td>
+                    <td>
+                        <input name="cookieStr" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        备注:
+                    </td>
+                    <td>
+                        <input name="remark" class="easyui-textbox" data-options="" style="width:320px" />
+                    </td>
+                </tr>
+
+
+            </table>
+        </form>
+    </div>
+</div>
+
+</body>
+
+
+</html>

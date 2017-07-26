@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.ConfigDao">
+    <select id="find" resultType="Config">
+        select * from config
+        order by id desc
+    </select>
+    <insert id="insert">
+        insert into config(name,value,remark,createTime,modifyTime)
+        values(#{name},#{value},#{remark},#{createTime},#{modifyTime})
+    </insert>
+
+    <update id="updateByPrimaryKey">
+        update config set
+        name = #{name},
+        value = #{value},
+        remark = #{remark},
+        modifyTime = #{modifyTime}
+        where id=#{id}
+    </update>
+
+
+    <delete id="deleteByPrimaryKeys">
+        delete from config where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

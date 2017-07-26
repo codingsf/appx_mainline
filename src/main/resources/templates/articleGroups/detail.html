@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${entity.name}"></title>
+    <script src="/lib/jquery.1.8.3.min.js"></script>
+
+</head>
+<body>
+<a href="/">首页</a>
+<h3 th:text="${entity.name}"></h3>
+<span th:text="${entity.flag}"></span>
+
+<shiro:user>
+    <th:block th:unless="${subscribe}">
+        <a th:href="${'javascript:subscribe('+entity.id+',true)'}" href="">订阅</a>
+    </th:block>
+    <th:block th:if="${subscribe}">
+        <a th:href="${'javascript:subscribe('+entity.id+',false)'}" href="">取消订阅</a>
+    </th:block>
+</shiro:user>
+
+
+
+
+
+<hr />
+<ul>
+    <li th:each="model:${articleList}" th:object="${model}">
+        <a th:text="${model.title}" th:href="${'/articles/'+model.id}"></a>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        创建时间:
+        <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        <th:block th:if="${model.occTime}">
+            &nbsp;&nbsp;&nbsp;
+            发生时间
+            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        </th:block>
+
+    </li>
+</ul>
+
+<script>
+    function subscribe(articleGroupId,subscribe){
+        $.post("/api/articleGroups/subscribe/"+articleGroupId,{subscribe:subscribe},null).complete(function(){
+            location.reload();
+        }).error(function(){
+            alert("错误");
+        })
+
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.UserDao">
+
+    <sql id="Base_Column_List">
+        id,username,nickname,email,phone,loginTime,createTime,status,isLock
+    </sql>
+
+    <select id="findByUsername" resultType="User">
+        SELECT
+        <include refid="Base_Column_List"/>,password
+         FROM user u WHERE  u.username = #{username}
+    </select>
+
+    <select id="findByPhone" resultType="User">
+        select
+        <include refid="Base_Column_List"/>
+         from user where phone=#{phone}
+    </select>
+    <select id="findByEmail" resultType="User">
+        select
+        <include refid="Base_Column_List"/>
+        from user where email=#{email}
+    </select>
+    
+    <select id="findSubscribeUser" resultType="User">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        WHERE id IN(
+            SELECT userId FROM articlesubscribe
+            WHERE articleGroupId=#{articleGroupId}
+            OR articleGroupId IN (
+              SELECT parentId FROM articleGroup WHERE id=#{articleGroupId}
+            )
+        )
+
+    </select>
+
+
+
+    <select id="find" resultType="User">
+        select
+        <include refid="Base_Column_List"/>
+        from user WHERE 1=1
+        order by id desc
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+      insert into user(username,password,nickname,email,phone,createTime,status,isLock)
+      values(#{username},#{password},#{nickname},#{email},#{phone},#{createTime},#{status},#{isLock})
+    </insert>
+
+    <update id="updateByPrimaryKey">
+        update user set nickname=#{nickname},email=#{email},phone=#{phone}
+        where id=#{id}
+    </update>
+
+</mapper>

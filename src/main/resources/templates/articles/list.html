@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<a href="/">首页</a>
+<ol>
+    <li th:each="model:${articleList}" th:object="${model}">
+        <a target="_blank" th:href="*{'/articles/'+id}" th:utext="*{title}"></a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        创建时间:
+        <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        <th:block th:if="*{occTime}">
+            &nbsp;&nbsp;&nbsp;
+            发生时间
+            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        </th:block>
+
+    </li>
+</ol>
+
+</body>
+</html>

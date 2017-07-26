@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <script src="lib/jquery.1.8.3.min.js"></script>
+
+</head>
+<body>
+<a href="/">首页</a>
+<a href="/register">注册</a>
+<form id="mainForm" action="javascript:void()">
+    用户名:<input id="username" name="username" value=""/>
+    <br/>
+    密码:<input id="password" name="password" value=""/>
+    <br/>
+    <input type="submit"/>
+</form>
+<script>
+    $("#mainForm").submit(function() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.ajax({
+            url: "login",
+            type: "post",
+            data: {
+                username: username,
+                password: password
+            },
+            success: function () {
+                //alert("登陆成功");
+                window.location.href="/";
+            },
+            error: function (data) {
+                if(data.responseText){
+                    alert(data.responseText)
+                }
+                else{
+                    alert("登录失败");
+                }
+
+            }
+        });
+        return false;
+    });
+</script>
+
+
+</body>
+</html>

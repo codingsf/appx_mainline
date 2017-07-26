@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.ArticleGroupDao">
+
+    <select id="find" resultType="ArticleGroup">
+      select * from articleGroup order by id desc
+    </select>
+
+
+    <select id="findByName" resultType="ArticleGroup">
+        select * from articleGroup where name=#{name}
+    </select>
+
+    <select id="findByFlag" resultType="ArticleGroup">
+        select * from articleGroup where flag=#{flag}
+    </select>
+
+    <insert id="insert">
+        insert into articleGroup(name,flag,createTime,status,parentId)
+        values(#{name},#{flag},#{createTime},#{status},#{parentId})
+    </insert>
+
+    <delete id="deleteByPrimaryKeys">
+        delete from articleGroup where id IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    
+    
+    <select id="index" resultType="top.appx.entity.vo.ArticleGroupVO">
+        select *,
+        (select count(*) from article where articleGroupId=articleGroup.id) as total,
+        (select count(*) from articlesubscribe where articleGroupId=articleGroup.id and userId=#{userId}) as subscribe
+        from articleGroup
+    </select>
+
+    <select id="selectByPrimaryKey" resultType="ArticleGroup">
+        select * from articleGroup where id=#{id}
+    </select>
+    
+    <select id="selectVOByMap" resultType="top.appx.entity.vo.ArticleGroupVO">
+       select *,
+    (select count(*) from articlesubscribe where articleGroupId=#{articleGroupId} and userId=#{userId}) as subscribe
+     from articleGroup where id=#{articleGroupId}
+    </select>
+    
+    <insert id="subscribe">
+        insert into articlesubscribe(articleGroupId,userId)
+        values(#{articleGroupId},#{userId})
+    </insert>
+    
+    <delete id="unsubscribe">
+        delete from articlesubscribe where articleGroupId=#{articleGroupId}
+        and userId=#{userId}
+    </delete>
+
+
+
+
+</mapper>

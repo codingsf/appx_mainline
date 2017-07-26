@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+
+<a href="/articles">文章列表</a>
+<a href="/articleGroups">文章分组</a>
+
+<shiro:guest>
+<a href="/login">登录</a>
+</shiro:guest>
+<shiro:user>
+    <a href="/logout">退出登录</a>
+</shiro:user>
+
+<shiro:hasAnyRoles name="管理员">
+    <a href="/admin">管理</a>
+</shiro:hasAnyRoles>
+
+
+<hr />
+系统时间:
+<span th:text="${#dates.format(now, 'yyyy-MM-dd HH:mm:ss')}">2017-07-15 19:32:23</span>
+<hr />
+这是一个新闻订阅网站,能将你需要了解的资讯第一时间通知给你(邮件/短信)
+</body>
+</html>

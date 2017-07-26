@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${entity.title}"></title>
+    <script src="/lib/jquery.1.8.3.min.js"></script>
+</head>
+<body th:object="${entity}">
+<a href="/">首页</a>
+
+<h3 th:utext="${entity.title}"></h3>
+<a th:href="${'/articleGroups/'+entity.articleGroupId}" th:text="${entity.articleGroupFlag}"></a>
+
+<hr/>
+<div style="width: 800px;margin: auto;" th:utext="${entity.content}"></div>
+
+
+<th:block th:if="*{url}">
+    <br />
+    <br />
+转载自:<a target="_blank" th:href="*{url}" th:text="*{url}"></a>
+    <br/>
+</th:block>
+<br />
+
+<script>
+    $("img").each(function(index,img){$(img).attr("src",$(img).attr("data-src"));});
+</script>
+
+</body>
+</html>
