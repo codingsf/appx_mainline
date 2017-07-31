@@ -25,7 +25,7 @@ public class CollectJob_Twitter extends CollectJob  {
     public void execute()throws Exception{
         String listUrl = "https://twitter.com/"+collectParam.getTwitterName();
         Element doc = Jsoup.connect(listUrl)
-                .proxy("192.168.199.113",1080)
+          //      .proxy("192.168.199.113",1080)
                 .get();
         Elements items = doc.select("li.stream-item");
         for (int i = 0; i < items.size(); i++) {

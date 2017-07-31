@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import top.appx.entity.Article;
+import top.appx.entity.vo.ArticleDetailVO;
+import top.appx.entity.vo.ArticleIndexVO;
 import top.appx.exception.NotFoundMsgException;
 import top.appx.service.ArticleService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
@@ -19,17 +20,19 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+
     @GetMapping
     public String list(ModelMap modelMap){
-        List<Article> articleList = articleService.index();
+        List<ArticleIndexVO> articleList = articleService.index();
         modelMap.put("articleList",articleList);
+
         return "/articles/list";
     }
 
     @GetMapping("/{id}")
     public String detail(@PathVariable("id") Long id, ModelMap modelMap){
         System.out.println("ttttttttt");
-        Article article = articleService.findById(id);
+        ArticleDetailVO article = articleService.detail(id);
         if(article==null){
             throw new NotFoundMsgException();
         }

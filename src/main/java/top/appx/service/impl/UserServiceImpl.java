@@ -122,5 +122,10 @@ public class UserServiceImpl implements UserService {
         userDao.updateByPrimaryKey(user);
     }
 
+    @Override
+    public void deleteByIds(List<Long> ids) {
+        userDao.deleteByPrimaryKeys(ids);
+    }
+
 
 }

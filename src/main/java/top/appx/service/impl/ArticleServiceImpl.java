@@ -4,12 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import top.appx.dao.ArticleDao;
 import top.appx.dao.ArticleGroupDao;
 import top.appx.entity.Article;
 import top.appx.entity.ArticleGroup;
-import top.appx.entity.User;
+import top.appx.entity.vo.ArticleDetailVO;
+import top.appx.entity.vo.ArticleIndexVO;
 import top.appx.service.ArticleService;
 import top.appx.util.StringUtil;
 
@@ -26,10 +26,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
-    public PageInfo<Article> findPage(Integer pageNum, Integer pageSize) throws Exception {
+    public PageInfo<Article> findPage(Object search,Integer pageNum, Integer pageSize) throws Exception {
         PageHelper.startPage(pageNum,pageSize);
         Article article = new Article();
-        List<Article> articleList = articleDao.find();
+        List<Article> articleList = articleDao.find(search);
         return new PageInfo<Article>(articleList);
     }
 
@@ -75,12 +75,20 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> index() {
+    public List<ArticleIndexVO> index() {
         return articleDao.index();
     }
 
     @Override
     public List<Article> findByArticleGroupId(Long id) {
+        PageHelper.startPage(1,20);
         return articleDao.findByArticleGroupId(id);
     }
+
+    @Override
+    public ArticleDetailVO detail(Long id) {
+        return articleDao.detail(id);
+    }
+
+
 }

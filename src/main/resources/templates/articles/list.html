@@ -3,24 +3,34 @@
 >
 <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title th:text="#{webTitle}"></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
 </head>
 <body>
-<a href="/">首页</a>
-<ol>
+<a th:href="@{/}">首页</a>
+<ul>
     <li th:each="model:${articleList}" th:object="${model}">
-        <a target="_blank" th:href="*{'/articles/'+id}" th:utext="*{title}"></a>
+        <a th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
         &nbsp;&nbsp;&nbsp;&nbsp;
         创建时间:
-        <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
         <th:block th:if="*{occTime}">
             &nbsp;&nbsp;&nbsp;
             发生时间
-            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm')}"></span>
         </th:block>
 
     </li>
-</ol>
+</ul>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
 </body>
 </html>

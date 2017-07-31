@@ -5,7 +5,14 @@
     <select id="find" resultType="CollectParam">
         select
         *
-        from collectParam
+        from collectParam where 1=1
+        <if test="name!=null and name.length()!=0">
+          and name like CONCAT('%',#{name},'%')
+        </if>
+
+        <if test="type!=null and type.length()!=0">
+            and type=#{type}
+        </if>
         order by id desc
     </select>
 

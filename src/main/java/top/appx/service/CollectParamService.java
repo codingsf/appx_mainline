@@ -6,7 +6,7 @@ import top.appx.entity.CollectParam;
 import java.util.List;
 
 public interface CollectParamService {
-    PageInfo<CollectParam> findPage(int pageNum, int pageSize);
+    PageInfo<CollectParam> findPage(Object search,int pageNum, int pageSize);
 
     void save(CollectParam collectParam);
 

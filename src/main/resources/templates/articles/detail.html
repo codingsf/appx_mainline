@@ -1,31 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:object="${entity}"
+>
 <head>
-    <meta charset="UTF-8" />
-    <title th:text="${entity.title}"></title>
-    <script src="/lib/jquery.1.8.3.min.js"></script>
+    <title><th:block th:text="*{title}"></th:block>-<th:block th:text="#{webTitle}"></th:block></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
 </head>
-<body th:object="${entity}">
-<a href="/">首页</a>
+<style type="text/css">
+    img{
+        max-width:100%;
+    }
+</style>
+<body>
 
-<h3 th:utext="${entity.title}"></h3>
-<a th:href="${'/articleGroups/'+entity.articleGroupId}" th:text="${entity.articleGroupFlag}"></a>
-
-<hr/>
-<div style="width: 800px;margin: auto;" th:utext="${entity.content}"></div>
-
-
-<th:block th:if="*{url}">
-    <br />
-    <br />
-转载自:<a target="_blank" th:href="*{url}" th:text="*{url}"></a>
-    <br/>
-</th:block>
-<br />
+<div class="article">
+    <div class="title">
+        <h3 class="title" th:utext="*{title}"></h3>
+        <p class="prot" style="color:#777;">
+            <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
+            <span class="from">
+                <a th:text="*{articleGroupName}" th:href="#{domain}+'/articleGroups/'+*{articleGroupId}">
+                </a>
+                <th:block th:if="*{url}">
+                    <a th:href="*{url}" style="color:gray;">原文</a>
+                </th:block>
+                <a th:href="#{domain}+'/'">首页</a>
+            </span>
+        </p>
+        <p th:if="*{occTime}" style="text-align: right;">
+            发生时间:
+            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm')}"></span>
+        </p>
+    </div>
+    <hr />
+    <div th:utext="*{content}" class="content">
+    </div>
+</div>
 
 <script>
-    $("img").each(function(index,img){$(img).attr("src",$(img).attr("data-src"));});
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
-
 </body>
 </html>

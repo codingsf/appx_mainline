@@ -16,22 +16,22 @@ public class Api_NotifyController extends BaseController {
     @Autowired
     private NotifyService notifyService;
 
-    //@RequiresPermissions("notify:manager")
+    @RequiresPermissions("notify:manager")
     @GetMapping
     public Object list(
             @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize)throws Exception{
-        return notifyService.findPage(pageNum,pageSize);
+            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize,Notify search)throws Exception{
+        return notifyService.findPage(search,pageNum,pageSize);
     }
 
-   // @RequiresPermissions("notify:add")
+    @RequiresPermissions("notify:add")
     @PostMapping
     public void add(Notify notify){
         notifyService.save(notify);
     }
 
 
-  //  @RequiresPermissions("notify:del")
+    @RequiresPermissions("notify:del")
     @DeleteMapping("/{ids}")
     public void delete(@PathVariable("ids") List<Long> ids){
         notifyService.delete(ids);

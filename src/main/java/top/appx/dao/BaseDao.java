@@ -15,6 +15,6 @@ public interface BaseDao<T> {
     int updateByPrimaryKeySelective(T record);
     int updateByPrimaryKeyWithBLOBs(T record);
     int updateByPrimaryKey(T record);
-
     List<T> find();
+    List<T> find(Object search);
 }

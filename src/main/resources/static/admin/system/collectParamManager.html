@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
     <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
     <script src="../../lib/jquery.1.8.3.min.js"></script>
@@ -27,7 +28,25 @@
         <div>
             <form id="searchForm" action="javascript:;">
                 <input type="submit" style="display:none" />
-                昵称:<input name="nickname" class="easyui-textbox" style="width:110px" />
+                名称:<input name="name" class="easyui-textbox" style="width:110px" />
+                类型:
+                <label>
+                    <input name="type" value="" type="radio" checked="checked" />
+                    全部
+                </label>
+                <label>
+                    <input name="type" value="common" type="radio" />
+                    普通
+                </label>
+
+                <label>
+                    <input name="type"  value="wechat" type="radio" />
+                    微信
+                </label>
+                <label>
+                    <input name="type"  value="twitter" type="radio" />
+                    推特
+                </label>
                 <a href="javascript:;" class="easyui-linkbutton submit" iconcls="icon-search" plain="true">查询</a>
             </form>
         </div>

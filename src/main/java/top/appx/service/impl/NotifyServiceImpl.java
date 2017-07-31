@@ -49,9 +49,9 @@ public class NotifyServiceImpl implements NotifyService {
     }
 
     @Override
-    public PageInfo<Notify> findPage(int pageNum, int pageSize) {
+    public PageInfo<Notify> findPage(Object search,int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Notify> notifyList = notifyDao.find();
+        List<Notify> notifyList = notifyDao.find(search);
         return new PageInfo<Notify>(notifyList);
     }
 

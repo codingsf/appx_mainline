@@ -14,7 +14,6 @@ import top.appx.service.ArticleGroupService;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ArticleGroupServiceImpl implements ArticleGroupService {
@@ -36,9 +35,9 @@ public class ArticleGroupServiceImpl implements ArticleGroupService {
     }
 
     @Override
-    public PageInfo<ArticleGroup> findPage(int pageNum, int pageSize) {
+    public PageInfo<ArticleGroup> findPage(ArticleGroup search, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<ArticleGroup> articleGroupList = articleGroupDao.find();
+        List<ArticleGroup> articleGroupList = articleGroupDao.find(search);
         return new PageInfo<ArticleGroup>(articleGroupList);
     }
 

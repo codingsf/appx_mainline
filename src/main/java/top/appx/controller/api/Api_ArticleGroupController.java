@@ -24,8 +24,8 @@ public class Api_ArticleGroupController {
     @GetMapping
     public Object list(
             @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize)throws Exception{
-        return articleGroupService.findPage(pageNum,pageSize);
+            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize,ArticleGroup search)throws Exception{
+        return articleGroupService.findPage(search,pageNum,pageSize);
     }
 
     @RequiresPermissions("articleGroup:add")

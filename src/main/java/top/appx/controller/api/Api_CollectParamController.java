@@ -20,8 +20,8 @@ public class Api_CollectParamController extends BaseController {
     @GetMapping
     public Object list(
             @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize)throws Exception{
-        return collectParamService.findPage(pageNum,pageSize);
+            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize,CollectParam collectParam)throws Exception{
+        return collectParamService.findPage(collectParam,pageNum,pageSize);
     }
 
     @RequiresPermissions("collectparam:add")

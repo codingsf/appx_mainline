@@ -34,24 +34,24 @@ function Dg() {
             { field: "id", title: "ID", hidden: false, checkbox: true },
             { field: "target", title: "目标", width: 100},
             { field: "title", title: "标题", width: 300},
-            { field: "type", title: "类型", width: 100,formatter:function(val,src){
+            { field: "type", title: "类型", width: 50,formatter:function(val,src){
                 switch (val){
                     case "email":
-                        return "邮箱";
+                        return "邮件";
                     case "sms":
                         return "短信";
                 }
                 return '-';
 
             } },
-            { field: "status", title: "状态", width: 100,formatter:function(val,src){
+            { field: "status", title: "状态", width: 50,formatter:function(val,src){
                 switch (val){
                     case "success":
                         return "成功";
                 }
                 return '-';
             } },
-
+            { field: "createTime", title: "创建时间", width: 100},
             { field: "errorMsg", title: "错误信息", width: 100,formatter:function(val){
                 if(val){
                     return "<a title='"+val+"'>"+val+"</a>";

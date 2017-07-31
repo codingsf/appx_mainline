@@ -8,21 +8,23 @@ import top.appx.entity.Article;
 import top.appx.service.ArticleService;
 import top.appx.util.ResponseMap;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/articles")
 public class Api_ArticleController extends BaseController {
+
     @Autowired
     private ArticleService articleService;
+
 
     @RequiresPermissions("article:manager")
     @GetMapping
     public Object list(
             @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize)throws Exception{
-        return articleService.findPage(pageNum,pageSize);
+            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize,Article search)throws Exception{
+
+        return articleService.findPage(search,pageNum,pageSize);
     }
 
 

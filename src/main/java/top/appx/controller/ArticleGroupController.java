@@ -64,8 +64,6 @@ public class ArticleGroupController {
         modelMap.put("articleList",articleList);
 
 
-
-
         modelMap.put("subscribe",articleGroup.isSubscribe());
         return "/articleGroups/detail";
     }

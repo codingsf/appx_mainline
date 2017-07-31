@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <title><th:block th:text="${entity.nickname}"/>的主页-<th:block th:text="#{webTitle}"/></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+</head>
+<body th:object="${entity}">
+
+欢迎您,
+<span th:text="*{nickname}"></span>
+<br />
+邮箱:
+<span th:text="*{email}"></span>
+<br />
+手机号:
+<span th:text="*{phone}"></span>
+</body>
+</html>

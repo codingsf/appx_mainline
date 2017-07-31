@@ -2,12 +2,13 @@ package top.appx.service;
 
 import com.github.pagehelper.PageInfo;
 import top.appx.entity.Article;
-import top.appx.entity.User;
+import top.appx.entity.vo.ArticleDetailVO;
+import top.appx.entity.vo.ArticleIndexVO;
 
 import java.util.List;
 
 public interface ArticleService {
-    PageInfo<Article> findPage(Integer pageNum , Integer pageSize) throws Exception;
+    PageInfo<Article> findPage(Object search,Integer pageNum , Integer pageSize) throws Exception;
     Article findById(Long id);
 
     void save(Article article);
@@ -18,9 +19,9 @@ public interface ArticleService {
 
     void deleteByIds(List<Long> ids);
 
-    List<Article> index();
+    List<ArticleIndexVO> index();
 
     List<Article> findByArticleGroupId(Long id);
 
-
+    ArticleDetailVO detail(Long id);
 }

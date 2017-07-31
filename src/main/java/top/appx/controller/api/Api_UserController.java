@@ -10,6 +10,7 @@ import top.appx.exception.UsernameExistException;
 import top.appx.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by qq799 on 2017/7/4.
@@ -51,5 +52,14 @@ public class Api_UserController extends BaseController {
     public void update(User user){
         userService.update(user);
     }
+
+
+    @RequiresPermissions("user:del")
+    @DeleteMapping("/{ids}")
+    public void delete(@PathVariable("ids") List<Long> ids){
+        userService.deleteByIds(ids);
+    }
+
+
 
 }

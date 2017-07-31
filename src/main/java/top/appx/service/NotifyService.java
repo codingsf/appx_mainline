@@ -8,7 +8,7 @@ import java.util.List;
 public interface NotifyService {
     void save(Notify notify);
 
-    PageInfo<Notify> findPage(int pageNum, int pageSize);
+    PageInfo<Notify> findPage(Object search,int pageNum, int pageSize);
 
     void delete(List<Long> ids);
 }

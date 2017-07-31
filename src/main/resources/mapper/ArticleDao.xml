@@ -6,17 +6,31 @@
     </sql>
 
 
-    <select id="index" resultType="Article">
-      SELECT * FROM (SELECT * FROM article ORDER BY id DESC) AS a
-        GROUP BY articleGroupId
-        ORDER BY id DESC
+    <select id="index" resultType="top.appx.entity.vo.ArticleIndexVO">
+      select 
+       <include refid="Base_Column_List"/>
+        ,
+        (select name from articleGroup where id=a.articleGroupId) as articleGroupName
+       from article a
+where id = (select max(id) from article b where a.articleGroupId=b.`articleGroupId`)
+order by id desc
     </select>
 
     <select id="find" resultType="Article">
         select 
          <include refid="Base_Column_List" />
          from article
+        <if test="title!=null and title.length()!=0">
+            where title like  CONCAT('%',#{title},'%')
+        </if>
+
         order by id desc
+    </select>
+    
+    <select id="detail" resultType="top.appx.entity.vo.ArticleDetailVO">
+        select *,
+         (select name from articleGroup where id=article.articleGroupId) as articleGroupName
+         from article where id=#{id}
     </select>
 
 

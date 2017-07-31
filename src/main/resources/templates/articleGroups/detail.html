@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
 >
-<head>
+<head th:object="${entity}">
     <meta charset="UTF-8" />
-    <title th:text="${entity.name}"></title>
+    <title><th:block th:text="*{name}"></th:block>-<th:block th:text="#{webTitle}"></th:block></title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
     <script src="/lib/jquery.1.8.3.min.js"></script>
 
 </head>
@@ -23,13 +24,10 @@
 </shiro:user>
 
 
-
-
-
 <hr />
 <ul>
     <li th:each="model:${articleList}" th:object="${model}">
-        <a th:text="${model.title}" th:href="${'/articles/'+model.id}"></a>
+        <a th:text="${model.title}" th:href="@{'/articles/'+*{id}}"></a>
 
         &nbsp;&nbsp;&nbsp;&nbsp;
         创建时间:
@@ -52,6 +50,15 @@
         })
 
     }
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
 
 </body>

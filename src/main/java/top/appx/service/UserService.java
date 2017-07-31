@@ -29,4 +29,7 @@ public interface UserService {
     List<User> findSubscribeUser(long articleGroupId);
 
     void update(User user);
+
+
+    void deleteByIds(List<Long> ids);
 }
