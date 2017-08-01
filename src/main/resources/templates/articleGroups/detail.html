@@ -6,40 +6,108 @@
     <meta charset="UTF-8" />
     <title><th:block th:text="*{name}"></th:block>-<th:block th:text="#{webTitle}"></th:block></title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
-    <script src="/lib/jquery.1.8.3.min.js"></script>
-
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="/lib/bootstrap-3.3.7/css/bootstrap.css"/>
+    <script src="/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
 </head>
-<body>
-<a href="/">首页</a>
-<h3 th:text="${entity.name}"></h3>
-<span th:text="${entity.flag}"></span>
+<body style="padding-top: 80px;">
+<nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">燎火新闻网</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="/">首页</a>
+                </li>
+                <li>
+                    <a href="/articles">文章列表</a>
+                </li>
+                <li>
+                    <a href="/articleGroups">文章分组</a>
+                </li>
+                <shiro:hasAnyRoles name="管理员">
+                    <li>
+                        <a th:href="@{/admin}">管理</a>
+                    </li>
+                </shiro:hasAnyRoles>
+                <li>
+                    <a href="/help.html">帮助</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <shiro:guest>
+                    <li>
+                        <a href="/login">登录</a>
+                    </li>
+                    <li>
+                        <a href="/register">注册</a>
+                    </li>
+                </shiro:guest>
+                <shiro:user>
+                    <li><a th:href="@{/logout}">退出登录</a></li>
+                </shiro:user>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<shiro:user>
-    <th:block th:unless="${subscribe}">
-        <a th:href="${'javascript:subscribe('+entity.id+',true)'}" href="">订阅</a>
-    </th:block>
-    <th:block th:if="${subscribe}">
-        <a th:href="${'javascript:subscribe('+entity.id+',false)'}" href="">取消订阅</a>
-    </th:block>
-</shiro:user>
+<div class="container">
+    <h2 >
+        <th:block th:text="${entity.name}"></th:block>
+        <shiro:user>
+            <span style="font-size: 14px;">
+                <th:block th:unless="${subscribe}">
+                    <a th:href="${'javascript:subscribe('+entity.id+',true)'}" href="">订阅</a>
+                </th:block>
+                <th:block th:if="${subscribe}">
+                    <a th:href="${'javascript:subscribe('+entity.id+',false)'}" href="">取消订阅</a>
+                </th:block>
+            </span>
+        </shiro:user>
+
+    </h2>
 
 
-<hr />
-<ul>
-    <li th:each="model:${articleList}" th:object="${model}">
-        <a th:text="${model.title}" th:href="@{'/articles/'+*{id}}"></a>
 
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        创建时间:
-        <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-        <th:block th:if="${model.occTime}">
-            &nbsp;&nbsp;&nbsp;
-            发生时间
-            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
-        </th:block>
+    <div class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input style="width: 250px;" id="keyWord" type="text" class="form-control" placeholder="搜索关键字" oninput="searchSubmit()" autocomplete="off"/>
+        </div>
+    </div>
 
-    </li>
-</ul>
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>文章标题</th>
+            <th>创建时间</th>
+            <th>发生时间</th>
+        </tr>
+        </thead>
+        <tr th:each="model:${articleList}" th:object="${model}">
+
+            <td>
+                <a th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
+            </td>
+            <td>
+                <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
+
+            </td>
+            <td>
+                <th:block th:if="*{occTime}">
+                    <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm')}"></span>
+                </th:block>
+            </td>
+        </tr>
+    </table>
+</div>
+
 
 <script>
     function subscribe(articleGroupId,subscribe){

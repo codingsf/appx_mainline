@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 @SpringBootApplication
 @EnableScheduling
+@EnableWebSocket
 //@EnableCaching
 //@EnableRedisHttpSession
 public class MainlineApplication extends SpringBootServletInitializer {

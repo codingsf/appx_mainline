@@ -1,51 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
->
+     >
 <head>
     <meta charset="UTF-8"/>
     <title th:text="#{webTitle}"></title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7/css/bootstrap.css"/>
+    <script src="/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
 </head>
-<body>
+<body style="padding-top: 80px;">
+<nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">燎火新闻网</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/">首页</a>
+                </li>
+                <li>
+                    <a href="/articles">文章列表</a>
+                </li>
+                <li>
+                    <a href="/articleGroups">文章分组</a>
+                </li>
+                <shiro:hasAnyRoles name="管理员">
+                    <li>
+                        <a th:href="@{/admin}">管理</a>
+                    </li>
+                </shiro:hasAnyRoles>
+                <li>
+                    <a href="/help.html">帮助</a>
+                </li>
+                <li>
+                    <a href="/chat">聊天室(建造中)</a>
+                </li>
 
-<a th:href="@{/articles}">文章列表</a>
-<a th:href="@{/articleGroups}">文章分组</a>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <shiro:guest>
+                    <li>
+                        <a href="/login">登录</a>
+                    </li>
+                    <li>
+                        <a href="/register">注册</a>
+                    </li>
+                </shiro:guest>
+                <shiro:user>
 
-<shiro:guest>
-    <a th:href="@{/login}">登录</a>
-    <a th:href="@{/register}">注册</a>
-</shiro:guest>
-<shiro:user>
-    <a th:href="@{/logout}">退出登录</a>
-</shiro:user>
+                    <li><a th:href="@{/logout}">退出登录</a></li>
+                </shiro:user>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<shiro:hasAnyRoles name="管理员">
-    <a th:href="@{/admin}">管理</a>
-</shiro:hasAnyRoles>
+<div class="page-header" style="text-align: center;">
+    <h2>
+        这是一个新闻资讯订阅网站,能将你需要了解的资讯第一时间通知给你(邮件/短信)
+    </h2>
+</div>
+
+<h2>
+    <pre>
+        1,注册账号
+        2,点击文章分组
+        3,订阅文章
+    </pre>
+</h2>
 
 
-<hr />
+
+
+<hr/>
 系统时间:
-<span th:text="${#dates.format(now, 'HH:mm:ss')}">2017-07-15 19:32:23</span>
-
-<hr />
-这是一个新闻资讯订阅网站,能将你需要了解的资讯第一时间通知给你(邮件/短信)
-<br />
-
-<pre>
-    1,注册账号
-    2,点击文章分组
-    3,订阅文章
-</pre>
-
-
-
-<br />
-by 燎火(qq799378666)
-<br />
-QQ群:155724471
-
+<span th:text="${#dates.format(now, 'HH:mm:ss')}">19:32:23</span>
 
 <script>
     var _hmt = _hmt || [];
@@ -56,7 +93,6 @@ QQ群:155724471
         s.parentNode.insertBefore(hm, s);
     })();
 </script>
-
 
 </body>
 </html>

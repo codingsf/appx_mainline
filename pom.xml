@@ -6,7 +6,7 @@
 	<groupId>top.appx</groupId>
 	<artifactId>mainline</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 
 	<name>mainline</name>
@@ -26,6 +26,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -35,13 +40,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<!-- 移除嵌入式tomcat插件 -->
+		<!--	&lt;!&ndash; 移除嵌入式tomcat插件 &ndash;&gt;
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
-			</exclusions>
+			</exclusions>-->
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

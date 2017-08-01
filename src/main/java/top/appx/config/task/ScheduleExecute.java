@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.client.RestTemplate;
+import top.appx.config.ApplicationContextStatic;
 import top.appx.dao.BaseDao;
 import top.appx.dao.CollectParamDao;
 import top.appx.entity.CollectParam;
@@ -35,6 +36,10 @@ public class ScheduleExecute {
     private static CollectParamDao collectParamDao;
 
     public static void execute(ApplicationContext applicationContext, QrtzJob qrtzJob){
+
+        if(ApplicationContextStatic.applicationContext==null){
+            ApplicationContextStatic.applicationContext = applicationContext;
+        }
 
         long startTime = System.currentTimeMillis();
         try {
