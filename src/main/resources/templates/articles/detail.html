@@ -22,9 +22,9 @@
                 <a th:text="*{articleGroupName}" th:href="#{domain}+'/articleGroups/'+*{articleGroupId}">
                 </a>
                 <th:block th:if="*{url}">
-                    <a th:href="*{url}" style="color:gray;">原文</a>
+                    <a target="_blank" th:href="*{url}" style="color:gray;">原文</a>
                 </th:block>
-                <a th:href="#{domain}+'/'">首页</a>
+                <a  th:href="#{domain}+'/'">首页</a>
             </span>
         </p>
         <p th:if="*{occTime}" style="text-align: right;">

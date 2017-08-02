@@ -16,9 +16,13 @@ public class IndexController {
         return "/index";
     }
 
+    @RequestMapping("/frame")
+    public String frame(){
+        return "/frame";
+    }
+
     @RequestMapping("/footer")
     public String footer(){
-        System.out.println("tttttttt");
         return "/footer";
     }
 

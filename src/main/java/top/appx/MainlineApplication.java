@@ -25,7 +25,6 @@ public class MainlineApplication extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("tttt");
 		SpringApplication.run(MainlineApplication.class, args);
 	}
 

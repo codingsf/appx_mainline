@@ -16,7 +16,6 @@ public class Chat_UserServiceImpl implements Chat_UserService {
     @Override
     public void insert(Chat_User chat_user) {
         chat_user.setCreateTime(new Date());
-        chat_user.setUserId(1L);
         chat_userDao.insert(chat_user);
     }
 }

@@ -20,6 +20,7 @@ import top.appx.exception.PhoneExistException;
 import top.appx.exception.UsernameExistException;
 import top.appx.service.UserService;
 import top.appx.util.PasswordUtil;
+import top.appx.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -54,12 +55,18 @@ public class UserServiceImpl implements UserService {
             throw new UsernameExistException();
         }
 
-        if(userDao.findByPhone(user.getPhone())!=null){
-            throw new PhoneExistException();
+        if(!StringUtil.isNullOrEmpty(user.getPhone())){
+            if(userDao.findByPhone(user.getPhone())!=null){
+                throw new PhoneExistException();
+            }
         }
 
         if(userDao.findByEmail(user.getEmail())!=null){
             throw new EmailExistException();
+        }
+
+        if(StringUtil.isNullOrEmpty(user.getAvatar())){
+            user.setAvatar("http://tva1.sinaimg.cn/crop.219.144.555.555.180/0068iARejw8esk724mra6j30rs0rstap.jpg");
         }
 
 
@@ -125,6 +132,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteByIds(List<Long> ids) {
         userDao.deleteByPrimaryKeys(ids);
+    }
+
+    @Override
+    public String createIcard(User user) {
+        userDao.createIcard(user);
+        return userDao.selectByPrimaryKey(user.getId()).getIcard();
+    }
+
+    @Override
+    public User findByIcard(String icard) {
+        if(icard==null){return null;}
+        return userDao.findByIcard(icard);
+    }
+
+    @Override
+    public List<User> findManager() {
+        return userDao.findManager();
     }
 
 

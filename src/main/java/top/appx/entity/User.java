@@ -14,6 +14,8 @@ public class User extends BaseEntity {
     private Date createTime;
     private Integer status;
     private Boolean isLock;
+    private String icard;
+    private String avatar;
 
     private String roleName;
 
@@ -103,5 +105,22 @@ public class User extends BaseEntity {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+
+    public String getIcard() {
+        return icard;
+    }
+
+    public void setIcard(String icard) {
+        this.icard = icard;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

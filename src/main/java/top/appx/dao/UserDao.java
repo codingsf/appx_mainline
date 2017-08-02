@@ -14,4 +14,10 @@ public interface UserDao extends BaseDao<User> {
     User findByEmail(String email);
     List<User> find(User user);
     List<User> findSubscribeUser(long articleGroupId);
+
+    void createIcard(User user);
+
+    User findByIcard(String icard);
+
+    List<User> findManager();
 }

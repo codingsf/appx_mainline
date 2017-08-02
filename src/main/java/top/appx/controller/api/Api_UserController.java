@@ -1,6 +1,8 @@
 package top.appx.controller.api;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,7 @@ import top.appx.controller.BaseController;
 import top.appx.entity.User;
 import top.appx.exception.UsernameExistException;
 import top.appx.service.UserService;
+import top.appx.util.ResponseMap;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -61,5 +64,12 @@ public class Api_UserController extends BaseController {
     }
 
 
+    @RequestMapping("/icard")
+    public Object icard(){
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User)subject.getPrincipal();
+        String icard = userService.createIcard(user);
+        return ResponseMap.instance().p("icard",icard);
+    }
 
 }

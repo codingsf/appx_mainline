@@ -37,6 +37,11 @@
                         <a th:href="@{/admin}">管理</a>
                     </li>
                 </shiro:hasAnyRoles>
+                <script>
+                    if(window.parent==window){
+                        document.write('<li><a href="/chat">聊天</a></li>')
+                    }
+                </script>
                 <li>
                     <a href="/help.html">帮助</a>
                 </li>

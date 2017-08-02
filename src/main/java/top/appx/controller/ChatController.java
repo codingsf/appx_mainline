@@ -13,4 +13,9 @@ public class ChatController {
         System.out.println("chat");
         return "/chat/index";
     }
+    @GetMapping("/chat/mobile")
+    public String index2(ModelMap modelMap){
+        System.out.println("chat");
+        return "/chat/mobile";
+    }
 }

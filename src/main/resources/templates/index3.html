@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
->
+     >
 <head>
     <meta charset="UTF-8"/>
     <title th:text="#{webTitle}"></title>
@@ -37,15 +37,13 @@
                         <a th:href="@{/admin}">管理</a>
                     </li>
                 </shiro:hasAnyRoles>
-                <script>
-                    if(window.parent==window){
-                        document.write('<li><a href="/chat">聊天</a></li>')
-                    }
-                </script>
-
                 <li>
                     <a href="/help.html">帮助</a>
                 </li>
+                <li>
+                    <a href="/chat">聊天室(建造中)</a>
+                </li>
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <shiro:guest>
@@ -78,13 +76,7 @@
         3,订阅文章
     </pre>
 </h2>
-<h2>
-    <script>
-        if(window.parent==window){
-            document.write('<a href="/chat">启动聊天室</a>(测试版暂不支持手机用户)')
-        }
-    </script>
-</h2>
+
 
 
 
@@ -100,9 +92,6 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
-</script>
-
-<script>
 </script>
 
 </body>

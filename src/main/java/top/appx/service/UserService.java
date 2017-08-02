@@ -32,4 +32,10 @@ public interface UserService {
 
 
     void deleteByIds(List<Long> ids);
+
+    String createIcard(User user);
+
+    User findByIcard(String icard);
+
+    List<User> findManager();//获取管理员
 }
