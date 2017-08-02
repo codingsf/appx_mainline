@@ -37,9 +37,6 @@ public class ScheduleExecute {
 
     public static void execute(ApplicationContext applicationContext, QrtzJob qrtzJob){
 
-        if(ApplicationContextStatic.applicationContext==null){
-            ApplicationContextStatic.applicationContext = applicationContext;
-        }
 
         long startTime = System.currentTimeMillis();
         try {

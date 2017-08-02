@@ -40,9 +40,10 @@
     
     <select id="index" resultType="top.appx.entity.vo.ArticleGroupVO">
         select *,
-        (select count(*) from article where articleGroupId=articleGroup.id) as total,
-        (select count(*) from articlesubscribe where articleGroupId=articleGroup.id and userId=#{userId}) as subscribe
-        from articleGroup
+        (select count(*) from article where articleGroupId=ag.id) as total,
+        (select count(*) from articlesubscribe where articleGroupId=ag.id and userId=#{userId}) as subscribe
+        from articleGroup as  ag
+        ORDER BY (SELECT COUNT(*) FROM articlesubscribe WHERE articleGroupId=ag.id) DESC
     </select>
 
     <select id="selectByPrimaryKey" resultType="ArticleGroup">

@@ -18,18 +18,18 @@ function initWS(){
             }
         });
 
-        console.log("open success")
-        layer.msg("聊天器连接服务器成功");
+        console.log("open success");
+        if(layer){
+            layer.msg("聊天器连接服务器成功");
+        }
     }
     ws.onerror = function(){
         ws.close();
     }
     ws.onclose = function(){
        // ws.close();
-        layer.msg("连接被关闭,3秒后重连");
-        setTimeout(function(){
-            initWS();
-        },3000);
+        layer.msg("连接被关闭,正在重试");
+        setTimeout(initWS,1000)
     };
     ws.onmessage = function(event){
         var raw_data = event.data;
@@ -92,6 +92,9 @@ function initWS(){
 
 layui.use('layim', function(layim){
     window.layim = layim;
+
+    initWS();
+
     //基础配置
     layim.config({
         //初始化接口
@@ -226,4 +229,3 @@ layui.use('layim', function(layim){
     });
 
 });
-initWS();

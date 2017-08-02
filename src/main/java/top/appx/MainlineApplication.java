@@ -6,13 +6,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 @EnableWebSocket
 //@EnableCaching
 //@EnableRedisHttpSession

@@ -25,6 +25,7 @@ public class NotifyServiceImpl implements NotifyService {
     private MailService mailService;
     @Override
     public void save(Notify notify) {
+
         logger.info("发送消息 ="+notify);
         try {
 

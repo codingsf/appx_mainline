@@ -179,6 +179,7 @@
     <logger name="org.springframework.web" level="info"/>
     <logger name="org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor" level="INFO"/>
     <logger name="top.appx" level="debug"/>
+    <logger name="top.appx.dao" level="info"/>
 
     <!--开发环境:打印控制台-->
     <springProfile name="dev">

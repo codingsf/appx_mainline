@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import top.appx.config.AppxConfig;
 import top.appx.entity.Article;
 import top.appx.entity.Notify;
 import top.appx.entity.User;
@@ -17,6 +18,8 @@ import top.appx.service.NotifyService;
 import top.appx.service.UserService;
 import top.appx.util.StringUtil;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Aspect
@@ -30,8 +33,26 @@ public class NotifyAspect {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AppxConfig appxConfig;
     private void notice(Article article){
         logger.info("新增文章 === " + article.getTitle() + " ,flag=" + article.getArticleGroupFlag() + ",grouId=" + article.getArticleGroupId());
+
+        if(article.getOccTime()!=null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(article.getOccTime());
+            if(article.getOccTime().getHours()==0 && article.getOccTime().getMinutes()==0 && article.getOccTime().getSeconds()==0){
+                calendar.add(Calendar.HOUR,24);
+            }
+            else{
+                calendar.add(Calendar.HOUR,3);
+            }
+            if(calendar.getTime().before(new Date())){
+                logger.info("消息超时"+article.getTitle());
+                return;
+            }
+        }
+
         List<User> userList = userService.findSubscribeUser(article.getArticleGroupId());
         for (int i = 0; i < userList.size(); i++) {
             try {
@@ -40,7 +61,7 @@ public class NotifyAspect {
                 notify.setTarget(user.getEmail());
                 notify.setType("email");
                 notify.setTitle(article.getTitle());
-                String url = "http://news.appx.top/articles/"+article.getId();
+                String url = "http://"+appxConfig.getDomain()+"/articles/"+article.getId();
                 String content = "详情:<a href='"+url+"'>"+url+"</a>";
                 notify.setContent(content);
                 notifyService.save(notify);
