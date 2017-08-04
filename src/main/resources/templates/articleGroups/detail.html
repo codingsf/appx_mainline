@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/lib/bootstrap-3.3.7/css/bootstrap.css"/>
     <script src="/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
     <script src="/lib/jquery.1.8.3.min.js"></script>
+    <script src="/lib/jquery.toTop.min.js"></script>
 </head>
 <body style="padding-top: 80px;">
 <nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
@@ -88,6 +89,8 @@
         </div>
     </div>
 
+
+
     <table class="table table-hover table-striped">
         <thead>
         <tr>
@@ -96,7 +99,7 @@
             <th>发生时间</th>
         </tr>
         </thead>
-        <tr th:each="model:${articleList}" th:object="${model}">
+        <tr th:each="model:${pageInfo.list}" th:object="${model}">
 
             <td>
                 <a th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
@@ -112,6 +115,20 @@
             </td>
         </tr>
     </table>
+
+    <th:block th:if="${pageInfo.pages>1}">
+        <nav id="pages" class="navbar-right">
+            <ul class="pagination">
+                <li id="page_pre" th:class="${pageInfo.pageNum>1?'enable':'disabled'}"><a th:href="${pageInfo.pageNum>1?'/articleGroups/'+entity.id+'?pageNum='+(pageInfo.pageNum-1):'javascript:void();'}">«</a></li>
+                <th:block th:each="i : ${#numbers.sequence(0,pageInfo.pages-1)}">
+                    <li th:class="${(i+1)==pageInfo.pageNum?'active':'a'}"><a th:href="${'/articleGroups/'+entity.id+'?pageNum='+(i+1)}" th:text="*{i+1}"></a></li>
+                </th:block>
+                <li id="page_next" th:class="${pageInfo.pages >pageInfo.pageNum  ?'enable':'disabled'}"><a th:href="${pageInfo.pages>pageInfo.pageNum?'/articleGroups/'+entity.id+'?pageNum='+(pageInfo.pageNum+1):'javascript:void();'}">»</a></li>
+            </ul>
+        </nav>
+    </th:block>
+
+
 </div>
 
 

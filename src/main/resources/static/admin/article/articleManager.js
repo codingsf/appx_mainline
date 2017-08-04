@@ -48,10 +48,52 @@ function Dg() {
         return columns;
     };
 }
+
+var ps = {
+    onOpen:function(){
+        $(".window").css("z-index","1001");
+        $(".window-shadow").css("z-index","900");
+    },
+    onResize:function(){
+        $(".window").css("z-index","1001");
+        $(".window-shadow").css("z-index","900");
+    },
+    onMove:function(){
+        $(".window").css("z-index","1001");
+        $(".window-shadow").css("z-index","900");
+    },
+    modal:false
+}
 //主对话框类,继承Dg_Method的方法
 function Dlg() {
     this.url = "/api/articles";
     this.init = Dlg_Method.init;
+    this.resetDlg = function(){
+        Dlg_Method.resetDlg.call(this,arguments);
+        UE.getEditor('editor').setContent('');
+    }
+    this.getFormJson = function(){
+        var fj = Dlg_Method.getFormJson.call(this);
+        fj.content =UE.getEditor('editor').getContent();
+        return fj;
+    },
+
+    this.showAdd = function(){
+        Dlg_Method.showAdd.call(this,ps);
+    }
+    this.showModify = function(){
+        Dlg_Method.showModify.call(this,ps);
+    }
+    this.loadForm = function(){
+        //#TODO
+        Dlg_Method.loadForm.call(this,arguments);
+        var record = this.getSelectedRecord();
+       // alert(record.content);
+        setTimeout(function(){
+            UE.getEditor('editor').setContent(record.content);
+        },100)
+    }
+
 }
 
 

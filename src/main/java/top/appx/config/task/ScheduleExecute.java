@@ -76,19 +76,19 @@ public class ScheduleExecute {
                     try {
 
                         object = applicationContext.getBean(clazz);
-                    }catch (Exception e0){
-                        System.out.println("错误:"+e0.getMessage());
+                    } catch (Exception e0) {
+                        System.out.println("错误:" + e0.getMessage());
                     }
 
-                    if(object==null){
+                    if (object == null) {
                         object = clazz.newInstance();
                     }
-                    objMap.put(scheduleJob.getBeanClass(),object);
+                    objMap.put(scheduleJob.getBeanClass(), object);
                 } catch (Exception e) {
                     log.error("任务名称 = [" + scheduleJob.getName()
-                            + "]---出错,"+e.getMessage());
+                            + "]---出错," + e.getMessage());
                 }
-
+            }
                 if (object == null) {
                     log.error("任务名称 = [" + qrtzJob.getName()
                             + "]---------------未启动成功，请检查是否配置正确！！！");
@@ -125,8 +125,6 @@ public class ScheduleExecute {
                         log.error("任务名称 = [" + scheduleJob.getName() + "]----------执行出错 "+e.getTargetException().getMessage());
                     }
                 }
-
-            }
             //#endregion schduleJob任务处理
         }
 

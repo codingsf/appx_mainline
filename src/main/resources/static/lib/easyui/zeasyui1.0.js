@@ -387,7 +387,10 @@ Dlg_Method = {
             left: ps.left ? ps.left : undefined,
             iconCls: ps.iconCls ? ps.iconCls : "icon-add",
             modal: ps.modal === undefined ? true : ps.modal,
-            resizable: this.resizable
+            resizable: this.resizable,
+            onOpen:ps.onOpen? ps.onOpen :undefined,
+            onResize:ps.onResize? ps.onResize :undefined,
+            onMove:ps.onMove? ps.onMove :undefined
         };
 
         if (ps.buttons) {
@@ -415,7 +418,6 @@ Dlg_Method = {
         var record = this.getSelectedRecord();
         this.resetDlg();
         if (record) {
-            console.log(record);
             this.mainForm.form("load").form("load", record);
         }
     },
@@ -435,7 +437,10 @@ Dlg_Method = {
             left: ps.left ? ps.left : undefined,
             iconCls: ps.iconCls ? ps.iconCls : (this.justQuery ? "icon-search" : "icon-edit"),
             modal: ps.modal === undefined ? true : ps.modal,
-            resizable: this.resizable
+            resizable: this.resizable,
+            onOpen:ps.onOpen? ps.onOpen :undefined,
+            onResize:ps.onResize? ps.onResize :undefined,
+            onMove:ps.onMove? ps.onMove :undefined
         };
         if (ps.buttons) {
             params.buttons = ps.buttons;

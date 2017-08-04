@@ -38,4 +38,6 @@ public interface UserService {
     User findByIcard(String icard);
 
     List<User> findManager();//获取管理员
+
+    boolean emailExist(String email);
 }

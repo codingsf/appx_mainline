@@ -1,5 +1,6 @@
 package top.appx.controller;
 
+import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import top.appx.entity.Article;
 import top.appx.entity.ArticleGroup;
 import top.appx.entity.User;
@@ -45,7 +47,10 @@ public class ArticleGroupController {
 
 
     @GetMapping("/{id}")
-    public String detail(@PathVariable("id") Long id, ModelMap modelMap){
+    public String detail(
+            @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize",defaultValue = "20") int pageSize,
+            @PathVariable("id") Long id, ModelMap modelMap)throws Exception{
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getPrincipal();
         Long userId = null;
@@ -53,15 +58,19 @@ public class ArticleGroupController {
             userId = user.getId();
         }
 
+
         ArticleGroupVO articleGroup = articleGroupService.selectVO(id,userId);
         if(articleGroup==null){
             throw new NotFoundMsgException();
         }
         modelMap.put("entity",articleGroup);
 
-        List<Article> articleList = articleService.findByArticleGroupId(articleGroup.getId());
+        Article article = new Article();
+        article.setArticleGroupId(articleGroup.getId());
+        PageInfo<Article> pageInfo = articleService.findPage(article,pageNum,pageSize);
+       // List<Article> articleList = articleService.findByArticleGroupId(articleGroup.getId());
 
-        modelMap.put("articleList",articleList);
+        modelMap.put("pageInfo",pageInfo);
 
 
         modelMap.put("subscribe",articleGroup.isSubscribe());

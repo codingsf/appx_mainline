@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import top.appx.config.AppxConfig;
 import top.appx.entity.Article;
 import top.appx.entity.vo.ArticleDetailVO;
 import top.appx.entity.vo.ArticleIndexVO;
@@ -20,6 +21,8 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private AppxConfig appxConfig;
 
     @GetMapping
     public String list(ModelMap modelMap){
@@ -37,6 +40,7 @@ public class ArticleController {
             throw new NotFoundMsgException();
         }
         modelMap.put("entity",article);
+        modelMap.put("domain",appxConfig.getDomain());
 
         return "/articles/detail";
     }

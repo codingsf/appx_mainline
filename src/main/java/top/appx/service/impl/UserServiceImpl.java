@@ -151,5 +151,10 @@ public class UserServiceImpl implements UserService {
         return userDao.findManager();
     }
 
+    @Override
+    public boolean emailExist(String email) {
+        return userDao.findByEmail(email)!=null;
+    }
+
 
 }

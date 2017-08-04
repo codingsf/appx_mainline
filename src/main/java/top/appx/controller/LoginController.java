@@ -11,12 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import top.appx.controller.BaseController;
+import top.appx.entity.Notify;
 import top.appx.entity.User;
 import top.appx.exception.EmailExistException;
 import top.appx.exception.MsgException;
 import top.appx.exception.PhoneExistException;
 import top.appx.exception.UsernameExistException;
 import top.appx.service.MailService;
+import top.appx.service.NotifyService;
 import top.appx.service.UserService;
 import top.appx.util.ResponseMap;
 import top.appx.util.StringUtil;
@@ -34,6 +36,9 @@ public class LoginController extends BaseController {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private NotifyService notifyService;
+
     @GetMapping("/login")
     public Object login(){
         return "/login";
@@ -48,7 +53,17 @@ public class LoginController extends BaseController {
     @ResponseBody
     public void auth(@RequestParam("mail") String mail, HttpSession session)throws Exception{
         String checkCode =(int)((Math.random()*9+1)*1000)+"";
-        mailService.sendSimpleMail(mail,"您的验证码为:"+checkCode,"你的验证码为:"+checkCode);
+        if(userService.emailExist(mail)){
+            throw new EmailExistException();
+        }
+
+        String msg ="您的验证码为:"+checkCode;
+        Notify notify = new Notify();
+        notify.setTarget(mail);
+        notify.setType("email");
+        notify.setTitle(msg);
+        notify.setContent(msg);
+        notifyService.save(notify);
         session.setAttribute("checkCode_"+mail,checkCode);
     }
     @PostMapping("/user/register")
@@ -115,13 +130,13 @@ public class LoginController extends BaseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("用户名不存在!");
         } catch (IncorrectCredentialsException e) {
             logger.info("对用户进行登录验证..验证未通过,错误的凭证! username = {}", username);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("用户名或密码错误");
         } catch (LockedAccountException e) {
             logger.info("对用户进行登录验证..验证未通过,账户已锁定! username = {}", username);
             return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(null);
         }catch(ExcessiveAttemptsException eae) {
             logger.info("对用户进行登录验证..验证未通过,错误次数过多! username = {}", username);
-            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(null);
+            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("验证失败,请稍后再试");
         } catch (AuthenticationException e) {
             logger.info("对用户进行登录验证..验证未通过,身份验证失败! username = {}" ,username);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);

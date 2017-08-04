@@ -90,5 +90,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.detail(id);
     }
 
+    @Override
+    public void update(Article article) {
+        articleDao.updateByPrimaryKey(article);
+    }
+
 
 }

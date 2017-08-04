@@ -50,5 +50,11 @@ public class Api_ArticleController extends BaseController {
         return ResponseMap.instance().p("id",article.getId());
     }
 
+//    @RequiresPermissions("article:modify")
+    @PutMapping
+    public void modify(Article article){
+        articleService.update(article);
+    }
+
 
 }

@@ -24,4 +24,6 @@ public interface ArticleService {
     List<Article> findByArticleGroupId(Long id);
 
     ArticleDetailVO detail(Long id);
+
+    void update(Article article);
 }

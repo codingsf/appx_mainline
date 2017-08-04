@@ -18,10 +18,13 @@ order by id desc
 
     <select id="find" resultType="Article">
         select 
-         <include refid="Base_Column_List" />
-         from article
+         <include refid="Base_Column_List" />,content
+         from article where 1=1
         <if test="title!=null and title.length()!=0">
-            where title like  CONCAT('%',#{title},'%')
+            and title like  CONCAT('%',#{title},'%')
+        </if>
+        <if test="articleGroupId!=null">
+            and articleGroupId=#{articleGroupId}
         </if>
 
         order by id desc
@@ -75,5 +78,10 @@ order by id desc
           limit 1
         ) as a
     </select>
+    
+    <update id="updateByPrimaryKey">
+        update article set content=#{content},title=#{title},modifyTime=#{modifyTime}
+        where id=#{id}
+    </update>
 
 </mapper>

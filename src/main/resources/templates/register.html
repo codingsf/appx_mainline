@@ -149,7 +149,9 @@
             data:data,
             success:function(){
                 layer.closeAll();
-                layer.msg("注册成功");
+                layer.msg("注册成功,正在跳转到登录页面",function(){
+                    location.href = "/login";
+                });
             },
             error:function(xhr){
                 layer.closeAll();
@@ -165,6 +167,7 @@
 
 
     function getCheckCode(){
+        layer.msg("正在发送验证码邮件,该过程可能花费几十秒的时间,请耐心等待");
         layer.load();
         var data = $("#mainForm").serializeJson();
         if(!data.email){
@@ -175,11 +178,16 @@
             url:"/user/auth?mail="+data.email,
             success:function(){
                 layer.closeAll();
-                layer.alert('验证码已经发送到你的邮箱,请查收');
+                layer.alert('验证码已经发送到你的邮箱,请查收(如果没有找到,请检查邮件垃圾箱里面是否有,并将它移出垃圾箱)');
             },
-            error:function(){
+            error:function(data){
                 layer.closeAll();
-                layer.alert('出错了,请刷新页面后重试');
+                if(data.responseText){
+                    layer.alert(data.responseText)
+                }
+                else{
+                    layer.alert("登录失败");
+                }
             }
         })
     }
