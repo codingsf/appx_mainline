@@ -3,8 +3,16 @@
 <mapper namespace="top.appx.dao.UserDao">
 
     <sql id="Base_Column_List">
-        id,username,nickname,email,phone,loginTime,createTime,status,isLock,icard,avatar
+        id,username,nickname,email,phone,loginTime,createTime,status,isLock,icard,avatar,qqOpenId
     </sql>
+    
+    <select id="findByQQOpenId" resultType="User">
+        select
+        <include refid="Base_Column_List"/>,password
+        from user where qqOpenId=#{qqOpenId}
+    </select>
+
+    
 
     <select id="findByUsername" resultType="User">
         SELECT
@@ -57,8 +65,8 @@
         order by id desc
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-      insert into user(username,password,nickname,email,phone,createTime,status,isLock,avatar)
-      values(#{username},#{password},#{nickname},#{email},#{phone},#{createTime},#{status},#{isLock},#{avatar})
+      insert into user(username,password,nickname,email,phone,createTime,status,isLock,avatar,qqOpenId)
+      values(#{username},#{password},#{nickname},#{email},#{phone},#{createTime},#{status},#{isLock},#{avatar},#{qqOpenId})
     </insert>
 
     <update id="updateByPrimaryKey">
@@ -75,4 +83,8 @@
         <include refid="Base_Column_List"/>
         from user where icard=#{icard}
     </select>
+    
+    <update id="updateQQOpenId">
+        update user set  qqOpenId=#{qqOpenId} where id=#{id}
+    </update>
 </mapper>

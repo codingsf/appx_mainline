@@ -56,7 +56,9 @@
                         <a href="/register">注册</a>
                     </li>
                 </shiro:guest>
+
                 <shiro:user>
+                    <li><a th:href="${'/user/'}" th:text="${user.nickname}"></a> </li>
 
                     <li><a th:href="@{/logout}">退出登录</a></li>
                 </shiro:user>
@@ -92,11 +94,6 @@
     </script>
 </h2>
 
-
-
-<hr/>
-系统时间:
-<span th:text="${#dates.format(now, 'HH:mm:ss')}">19:32:23</span>
 
 <script>
     var _hmt = _hmt || [];

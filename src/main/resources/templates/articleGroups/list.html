@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="lib/bootstrap-3.3.7/css/bootstrap.css"/>
     <script src="lib/bootstrap-3.3.7/js/bootstrap.js"></script>
     <script src="/lib/jquery.1.8.3.min.js"></script>
+    <script src="/lib/layer/layer.js"></script>
 </head>
 <body style="padding-top: 80px;">
 <nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
@@ -77,16 +78,19 @@
                 <div style="text-align: center">
                     <h4 th:text="*{total}"></h4>
                 </div>
+                <div style="text-align: center;">
+                <shiro:guest>
+                    <a href="javascript:layer.alert('请先登录')">订阅</a>
+                </shiro:guest>
                 <shiro:user>
-                    <div style="text-align: center;">
                         <th:block th:unless="*{subscribe}">
                             <a th:href="*{'javascript:subscribe('+id+',true)'}" href="">订阅</a>
                         </th:block>
                         <th:block th:if="*{subscribe}">
                             <a th:href="*{'javascript:subscribe('+id+',false)'}" href="">取消订阅</a>
                         </th:block>
-                    </div>
                 </shiro:user>
+                </div>
             </div>
         </div>
     </div>
@@ -96,8 +100,11 @@
 
 <script>
     function subscribe(articleGroupId,subscribe){
+        layer.load();
         $.post("/api/articleGroups/subscribe/"+articleGroupId,{subscribe:subscribe},null).complete(function(){
             location.reload();
+            layer.closeAll();
+
         })
     }
 </script>

@@ -67,13 +67,36 @@
 </ol>
 </div>
 
+
+
+
 <div class="container" style="text-align: center;">
-<form id="mainForm" class="layui-form" action="javascript:void();return false;" style="width: 100%;">
+    <form class="layui-form" >
+        <div class="layui-form-item" style="text-align: left;">
+
+            <div class="layui-input-block">
+                <input lay-filter="registerType" onclick="javascript:alert();" type="radio" name="registerType" value="qq_new" title="新用户" checked=""/>
+                <input lay-filter="registerType" type="radio" name="registerType" value="qq_old" title="已有用户"/>
+            </div>
+        </div>
+    </form>
+
+
+    <form id="form_qq_new" class="layui-form" action="javascript:void();return false;" style="width: 100%;">
+
+        <input type="hidden" name="registerType" value="qq_new"/>
+
+        <div class="layui-form-item">
+            <div style="text-align: left;">
+                <div class="layui-input-inline">
+                <img th:src="${qqUser.avatar}"/>
+                </div>
+            </div>
+        </div>
     <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-inline">
             <input type="text" name="username" required="required"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input"/>
-
         </div>
         <div class="layui-form-mid layui-word-aux"><span style="color:red;">*</span> </div>
     </div>
@@ -82,7 +105,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-inline">
-            <input type="password" name="password" required="required" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+            <input  type="password" name="password" required="required" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
         </div>
         <div class="layui-form-mid layui-word-aux"><span style="color:red;">*</span> </div>
     </div>
@@ -90,7 +113,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">昵称</label>
         <div class="layui-input-inline">
-            <input type="text" name="nickname" required="required"  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input"/>
+            <input th:value="${qqUser.nickname}" type="text" name="nickname" required="required"  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input"/>
         </div>
         <div class="layui-form-mid layui-word-aux"><span style="color:red;">*</span> </div>
     </div>
@@ -98,7 +121,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">手机号</label>
         <div class="layui-input-inline">
-            <input type="text" name="phone" lay-verify="phone" autocomplete="off" placeholder="请输入手机号" class="layui-input"/>
+            <input type="text" name="phone"   autocomplete="off" placeholder="请输入手机号" class="layui-input"/>
         </div>
         <div class="layui-form-mid layui-word-aux">可选</div>
     </div>
@@ -127,6 +150,32 @@
         </div>
     </div>
 </form>
+
+    <form id="form_qq_old" style="display: none;">
+        <input type="hidden" name="registerType" value="qq_old"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" required="required"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input"/>
+
+            </div>
+            <div class="layui-form-mid layui-word-aux"><span style="color:red;">*</span> </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input  type="password" name="password" required="required" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux"><span style="color:red;">*</span> </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <button class="layui-btn" lay-submit="" lay-filter="demo2">注册</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <script>
@@ -139,8 +188,7 @@
         return serializeObj;
     };
 
-
-    $("#mainForm").submit(function(){
+    $("form").submit(function(){
         var data = $(this).serializeJson();
         layer.load();
         $.ajax({
@@ -192,6 +240,20 @@
             }
         })
     }
+
+    layui.use('form', function(){
+        var form = layui.form(); //只有执行了这一步，部分表单元素才会修饰成
+        form.on('radio(registerType)', function(data){
+            if(data.value=="qq_new"){
+                $("#form_qq_new").show();
+                $("#form_qq_old").hide();
+            }else{
+                $("#form_qq_new").hide();
+                $("#form_qq_old").show();
+            }
+            console.log(data)
+        });
+    });
 
 
 </script>

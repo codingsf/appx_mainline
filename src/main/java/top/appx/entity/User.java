@@ -16,6 +16,7 @@ public class User extends BaseEntity {
     private Boolean isLock;
     private String icard;
     private String avatar;
+    private String qqOpenId;
 
     private String roleName;
 
@@ -122,5 +123,14 @@ public class User extends BaseEntity {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+
+    public String getQqOpenId() {
+        return qqOpenId;
+    }
+
+    public void setQqOpenId(String qqOpenId) {
+        this.qqOpenId = qqOpenId;
     }
 }

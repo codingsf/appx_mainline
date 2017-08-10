@@ -54,16 +54,22 @@ public class AuthenticationRealm extends AuthorizingRealm{
 
         Role role = roleMapper.findByUserId(record.getId());
 
-
-
-
         //设置角色名称
         record.setRoleName(role.getName());
 
 
+        String password = record.getPassword();
+        if(authenticationToken instanceof QQLoginToken){
+            password = "202cb962ac59075b964b07152d234b70";
+            record.setPassword(password);
+        }
+
+
+
         //将此用户存放到登录认证info中，无需自己做密码对比，Shiro使用CredentialsMatcher会为我们进行密码对比校验
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                record, record.getPassword(), getName());
+                record, password, getName());
+
 //        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
 //                record, // 用户名
 //                record.getPassword(), // 密码

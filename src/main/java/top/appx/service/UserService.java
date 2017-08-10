@@ -40,4 +40,8 @@ public interface UserService {
     List<User> findManager();//获取管理员
 
     boolean emailExist(String email);
+
+    User findByQQOpenId(String openId);
+
+    void registerByQQOld(User userEntity);
 }

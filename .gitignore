@@ -1,4 +1,5 @@
 target/
+qqconnectconfig.properties
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

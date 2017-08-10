@@ -90,6 +90,11 @@
             </div>
         </div>
     </form>
+  <hr/>
+<!--    <div>
+        其他登录方式:
+        <a href="/qqlogin">QQ登录</a>
+    </div>-->
 </div>
 
 
@@ -114,10 +119,10 @@
             error: function (data) {
                 layer.closeAll();
                 if(data.responseText){
-                    layer.alert(data.responseText)
+                    layer.msg(data.responseText)
                 }
                 else{
-                    layer.alert("登录失败");
+                    layer.msg("登录失败");
                 }
             }
         });

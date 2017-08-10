@@ -65,6 +65,10 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistException();
         }
 
+        if(!StringUtil.isNullOrEmpty(user.getQqOpenId()) && userDao.findByQQOpenId(user.getQqOpenId())!=null){
+            throw new RuntimeException();
+        }
+
         if(StringUtil.isNullOrEmpty(user.getAvatar())){
             user.setAvatar("http://tva1.sinaimg.cn/crop.219.144.555.555.180/0068iARejw8esk724mra6j30rs0rstap.jpg");
         }
@@ -99,6 +103,33 @@ public class UserServiceImpl implements UserService {
     public void register(User user){
         saveUserAndUserRole(user,2L);
     }
+    @Transactional
+    @Override
+    public void registerByQQOld(User userEntity) {
+        if(userDao.findByQQOpenId(userEntity.getQqOpenId())!=null){
+            throw new RuntimeException();
+        }
+
+        User user = userDao.findByUsername(userEntity.getUsername());
+        if(user==null){
+            throw new MsgException(HttpStatus.BAD_REQUEST,"用户名不存在");
+        }
+
+        String md5pwd = null;
+        try {
+            md5pwd = PasswordUtil.md532(userEntity.getPassword());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(!user.getPassword().equals(md5pwd)){
+            throw new MsgException(HttpStatus.BAD_REQUEST,"密码错误");
+        }
+        user.setQqOpenId(userEntity.getQqOpenId());
+        userDao.updateQQOpenId(user);
+
+
+    }
+
 
     @Cacheable(value="test_num")
     public Article getNum() {
@@ -155,6 +186,14 @@ public class UserServiceImpl implements UserService {
     public boolean emailExist(String email) {
         return userDao.findByEmail(email)!=null;
     }
+
+    @Override
+    public User findByQQOpenId(String openId) {
+        User user1 =   userDao.findByQQOpenId(openId);
+        return user1;
+    }
+
+
 
 
 }

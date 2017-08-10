@@ -20,4 +20,9 @@ public interface UserDao extends BaseDao<User> {
     User findByIcard(String icard);
 
     List<User> findManager();
+
+
+    User findByQQOpenId(String qqOpenId);
+
+    void updateQQOpenId(User user);
 }
