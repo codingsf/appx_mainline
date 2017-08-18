@@ -80,6 +80,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleIndexVO> articles() {
+        return articleDao.articles();
+    }
+
+    @Override
     public List<Article> findByArticleGroupId(Long id) {
         PageHelper.startPage(1,20);
         return articleDao.findByArticleGroupId(id);

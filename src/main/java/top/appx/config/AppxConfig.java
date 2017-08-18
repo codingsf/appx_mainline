@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Configuration;
 public class AppxConfig {
     private String domain;
     private boolean scheduleInit;
+    private String proxy_host;
+    private Integer proxy_port;
+    private String qqgroupids;
+    private String qqreboot;
 
     public String getDomain() {
         return domain;
@@ -23,5 +27,38 @@ public class AppxConfig {
 
     public void setScheduleInit(boolean scheduleInit) {
         this.scheduleInit = scheduleInit;
+    }
+
+    public String getProxy_host() {
+        return proxy_host;
+    }
+
+    public void setProxy_host(String proxy_host) {
+        this.proxy_host = proxy_host;
+    }
+
+
+    public Integer getProxy_port() {
+        return proxy_port;
+    }
+
+    public void setProxy_port(Integer proxy_port) {
+        this.proxy_port = proxy_port;
+    }
+
+    public String getQqgroupids() {
+        return qqgroupids;
+    }
+
+    public void setQqgroupids(String qqgroupids) {
+        this.qqgroupids = qqgroupids;
+    }
+
+    public String getQqreboot() {
+        return qqreboot;
+    }
+
+    public void setQqreboot(String qqreboot) {
+        this.qqreboot = qqreboot;
     }
 }

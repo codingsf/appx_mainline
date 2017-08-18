@@ -5,12 +5,37 @@
 <head>
     <meta charset="UTF-8"/>
     <title th:text="#{webTitle}"></title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="这是一个炒币资讯订阅网站,将最新的炒币资讯(各大交易所上公告,推特,微信,等等)第一时间通知给你" />
+    <meta name="keyword" content="燎火,燎火新闻网,新闻,资讯,软件交流" />
     <script src="/lib/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="lib/bootstrap-3.3.7/css/bootstrap.css"/>
     <script src="/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
+
+    <style type="text/css">
+        footer{
+            background-color: #2a2730;
+            height: 180px;
+        }
+        footer a{
+            color:#ffffff;
+        }
+
+        .block{
+            margin-top: 20px;
+            padding: 30px;
+            background: #fbfbfb;
+            box-shadow: 1px 1px 1px #e5e5e5;
+        }
+        img.avatar{
+            width:60px;
+            height: 60px;
+            border-radius: 1px;
+        }
+    </style>
+
 </head>
-<body style="padding-top: 80px;">
+<body style="padding-top: 80px;    background-color: #f0f0f0;">
 <nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -58,8 +83,6 @@
                 </shiro:guest>
 
                 <shiro:user>
-                    <li><a th:href="${'/user/'}" th:text="${user.nickname}"></a> </li>
-
                     <li><a th:href="@{/logout}">退出登录</a></li>
                 </shiro:user>
             </ul>
@@ -67,33 +90,90 @@
     </div>
 </nav>
 
-<div class="page-header" style="text-align: center;">
-    <h2>
-        这是一个新闻资讯订阅网站,能将你需要了解的资讯第一时间通知给你(邮件/短信)
-    </h2>
-</div>
+<shiro:guest>
+    <div class="container">
+        <h3>
+        这是一个炒币资讯订阅网站,将最新的<a href='/articleGroups'>炒币资讯</a>(各大交易所上公告,推特,微信,等等)第一时间通知给你,请注册后选择你所需要订阅的新闻
+            不会用的人可以加qq群:155724471,该网站上的最新消息会自动通过机器人发送到qq群
+        </h3>
+    </div>
+</shiro:guest>
 
-<h3>
-    <ul>
-        <li>
-            <a href="/register">注册</a>账号并登陆
-        </li>
-        <li>
-            点击<a href="/articleGroups">文章分组</a>
-        </li>
-        <li>
-            点击'订阅'文章
-        </li>
-    </ul>
-</h3>
-<h2>
-    <script>
-        if(window.parent==window){
-            document.write('<a href="/chat">启动聊天室</a>(测试版暂不支持手机用户)')
-        }
-    </script>
-</h2>
+<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="block">
+                    最新文章
+                    <table class="table table-hover table-striped">
+                        <tr th:each="model:${articleList}" th:object="${model}">
+                            <td>
+                                <a th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
+                                (<a style="color:gray;" th:href="@{'/articleGroups/'+*{articleGroupId}}" th:text="*{articleGroupName}"></a>)
+                                <span style="font-style: italic;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="block" style="min-height: 300px;">
+                    <shiro:user>
+                        <img class="avatar"  th:src="${user.avatar}"/>
+                            <a href="/user" th:text="${user.nickname}" style="font-size: 20px;margin-left: 20px;"></a>
 
+                        <hr />
+                        <div>
+                            <span  style="font-size: x-large;">
+                                <label>积分:</label>
+                                <span style="color:red;" th:text="${user.money}"></span>
+                            </span>
+                            <th:block th:if="!${user.signTime}">
+                                <a href="/sign">签到</a>
+                            </th:block>
+                        </div>
+                    </shiro:user>
+                    <shiro:guest>
+                        <div style="text-align: center;padding-top: 60px;">
+                            <h2>
+                                <a href="/login">登录</a>
+                                |
+                                <a href="/register">注册</a>
+                            </h2>
+                            <div>
+                                <a href="/qqlogin">QQ登录</a>
+                            </div>
+                        </div>
+
+                    </shiro:guest>
+                </div>
+                <div class="block" style="margin-top: 30px;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<footer>
+    <div class="container" style="margin: 30px;">
+        <h4 style="padding:10px;">
+            <a href='http://www.jubi.com/i_obziuj'>聚币网</a> |
+            <a href='http://www.huobi.com'>火币网</a> |
+            <a href='http://yunbi.com'>云币网</a> |
+            <a href='https://bter.com/ref/360698'>比特儿</a> |
+            <a href='http://btc9.com'>币久网</a> |
+            <a href="http://www.btc38.com/">比特时代</a> |
+            <a href="http://www.bitstar.com/?id=106790">比特星</a>
+        </h4>
+
+        <h5 style="color:#bbb;max-width: 400px;">
+            本网站为技术性交流网站,提供新闻咨询订阅功能,后面会逐渐开发更多其他的功能,敬请期待
+        </h5>
+
+        <a href="http://www.miitbeian.gov.cn">皖ICP备15015583号-2</a>
+    </div>
+
+</footer>
 
 <script>
     var _hmt = _hmt || [];
@@ -105,8 +185,6 @@
     })();
 </script>
 
-<script>
-</script>
 
 </body>
 </html>

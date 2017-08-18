@@ -21,6 +21,8 @@ public interface ArticleService {
 
     List<ArticleIndexVO> index();
 
+    List<ArticleIndexVO> articles();
+
     List<Article> findByArticleGroupId(Long id);
 
     ArticleDetailVO detail(Long id);

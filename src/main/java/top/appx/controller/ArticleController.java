@@ -26,7 +26,7 @@ public class ArticleController {
 
     @GetMapping
     public String list(ModelMap modelMap){
-        List<ArticleIndexVO> articleList = articleService.index();
+        List<ArticleIndexVO> articleList = articleService.articles();
         modelMap.put("articleList",articleList);
 
         return "/articles/list";

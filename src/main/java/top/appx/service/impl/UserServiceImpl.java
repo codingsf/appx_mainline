@@ -130,6 +130,31 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public void inviteAward(Long userId) {
+        userDao.inviteAward(userId);
+    }
+
+    @Override
+    public User findById(Long id) {
+       return userDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<User> findByInviteUserId(Long inviteUserId) {
+        return userDao.findByInviteUserId(inviteUserId);
+    }
+
+    @Override
+    public void sign(Long id) {
+        userDao.sign(id,new Date());
+    }
+
+    @Override
+    public void resetByAnyDay0() {
+        userDao.resetByAnyDay0();
+    }
+
 
     @Cacheable(value="test_num")
     public Article getNum() {

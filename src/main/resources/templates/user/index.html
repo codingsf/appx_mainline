@@ -8,14 +8,44 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
 </head>
 <body th:object="${entity}">
-
+<h2>
+    <a href="/">回到首页</a>
+    <br  />
 欢迎您,
 <span th:text="*{nickname}"></span>
+<br />
+我的邀请链接:
+<input style="width:200px;" th:value="${'http://news.appx.top/invite/'+entity.id}" />
+
+<br />
+积分:
+<span style="color:red;" th:text="*{money}"></span>(邀请别人注册可以获得10积分/人,积分后面有大作用)
 <br />
 邮箱:
 <span th:text="*{email}"></span>
 <br />
 手机号:
 <span th:text="*{phone}"></span>
+
+<br />
+我邀请的用户:
+<br />
+<ul>
+    <li th:each="model:${inviteUsers}" th:object="${model}" >
+        <span th:text="*{username}"></span>
+    </li>
+</ul>
+</h2>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
 </body>
 </html>

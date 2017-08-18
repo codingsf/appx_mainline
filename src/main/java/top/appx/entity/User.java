@@ -3,7 +3,7 @@ package top.appx.entity;
 import java.util.Date;
 
 public class User extends BaseEntity {
-
+    private static final long serialVersionUID = 6234318353242114923L;
     private Long id;
     private String username;
     private String password;
@@ -17,8 +17,18 @@ public class User extends BaseEntity {
     private String icard;
     private String avatar;
     private String qqOpenId;
-
+    private Long money;
+    private Long inviteUserId;
     private String roleName;
+    private Date signTime;
+
+    public Date getSignTime() {
+        return signTime;
+    }
+
+    public void setSignTime(Date signTime) {
+        this.signTime = signTime;
+    }
 
     public Long getId() {
         return id;
@@ -132,5 +142,21 @@ public class User extends BaseEntity {
 
     public void setQqOpenId(String qqOpenId) {
         this.qqOpenId = qqOpenId;
+    }
+
+    public Long getMoney() {
+        return money;
+    }
+
+    public void setMoney(Long money) {
+        this.money = money;
+    }
+
+    public Long getInviteUserId() {
+        return inviteUserId;
+    }
+
+    public void setInviteUserId(Long inviteUserId) {
+        this.inviteUserId = inviteUserId;
     }
 }

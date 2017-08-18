@@ -1,9 +1,11 @@
 package top.appx.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import top.appx.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -25,4 +27,17 @@ public interface UserDao extends BaseDao<User> {
     User findByQQOpenId(String qqOpenId);
 
     void updateQQOpenId(User user);
+
+    /**
+     * 邀请奖励
+     * @param userId
+     */
+    void inviteAward(Long userId);
+
+
+    List<User> findByInviteUserId(Long inviteUserId);
+
+    void sign(@Param("userId") Long id,@Param("signTime") Date date);
+
+    void resetByAnyDay0();
 }

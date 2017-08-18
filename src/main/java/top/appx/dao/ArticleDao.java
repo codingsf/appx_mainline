@@ -14,6 +14,8 @@ public interface ArticleDao extends BaseDao<Article> {
 
     List<ArticleIndexVO> index();
 
+    List<ArticleIndexVO> articles();
+
     List<Article> findByArticleGroupId(Long id);
 
     boolean exist(Article article);

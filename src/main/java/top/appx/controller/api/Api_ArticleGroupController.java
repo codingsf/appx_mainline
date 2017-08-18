@@ -48,6 +48,7 @@ public class Api_ArticleGroupController {
         long userId = user.getId();
 
         articleGroupService.subscribe(id,userId,subscribe);
+
     }
 }
 

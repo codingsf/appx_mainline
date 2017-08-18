@@ -139,6 +139,10 @@ public class LoginController extends BaseController {
     public Object register(User userEntity,String checkCode,HttpSession session,@RequestParam("registerType") String registerType){
 
 
+        if(session.getAttribute("inviteUserId")!=null){
+            userEntity.setInviteUserId((Long)session.getAttribute("inviteUserId"));
+        }
+
         System.out.println("注册中");
 
         if(StringUtil.isNullOrEmpty(userEntity.getUsername())){
@@ -174,13 +178,17 @@ public class LoginController extends BaseController {
             userService.register(userEntity);
         }
 
+
+        if(userEntity.getInviteUserId()!=null){
+            userService.inviteAward(userEntity.getInviteUserId());
+        }
         HashMap<String,Object> hashMap = new HashMap<String,Object>();
         hashMap.put("success",true);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                    mailService.sendSimpleMail("799378666@qq.com","新用户注册提醒","新用户注册,邮箱:"+userEntity.getEmail());
+                    mailService.sendSimpleMail("799378666@qq.com","新用户注册提醒","新用户注册,邮箱:"+userEntity.getEmail()+",邀请:"+userEntity.getInviteUserId());
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }

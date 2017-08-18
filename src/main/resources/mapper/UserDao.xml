@@ -3,7 +3,7 @@
 <mapper namespace="top.appx.dao.UserDao">
 
     <sql id="Base_Column_List">
-        id,username,nickname,email,phone,loginTime,createTime,status,isLock,icard,avatar,qqOpenId
+        id,username,nickname,email,phone,loginTime,createTime,status,isLock,icard,avatar,qqOpenId,money,signTime
     </sql>
     
     <select id="findByQQOpenId" resultType="User">
@@ -11,6 +11,21 @@
         <include refid="Base_Column_List"/>,password
         from user where qqOpenId=#{qqOpenId}
     </select>
+
+    <update id="inviteAward">
+      update user set money=money+10 where id=#{userId}
+    </update>
+    
+    <update id="sign">
+        update user set money=money+5,signTime=#{signTime} where id=#{userId}
+    </update>
+    
+<select id="findByInviteUserId" resultType="User">
+    select
+    <include refid="Base_Column_List"/>
+    from user
+    where inviteUserId=#{inviteUserId}
+</select>
 
     
 
@@ -51,6 +66,9 @@
 
     </select>
 
+    <update id="resetByAnyDay0">
+      update user set signTime=null;
+    </update>
 
     <select id="selectByPrimaryKey" resultType="User">
         select
@@ -65,8 +83,8 @@
         order by id desc
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-      insert into user(username,password,nickname,email,phone,createTime,status,isLock,avatar,qqOpenId)
-      values(#{username},#{password},#{nickname},#{email},#{phone},#{createTime},#{status},#{isLock},#{avatar},#{qqOpenId})
+      insert into user(username,password,nickname,email,phone,createTime,status,isLock,avatar,qqOpenId,inviteUserId)
+      values(#{username},#{password},#{nickname},#{email},#{phone},#{createTime},#{status},#{isLock},#{avatar},#{qqOpenId},#{inviteUserId})
     </insert>
 
     <update id="updateByPrimaryKey">

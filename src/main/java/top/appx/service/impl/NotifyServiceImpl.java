@@ -10,6 +10,7 @@ import top.appx.dao.NotifyDao;
 import top.appx.entity.Notify;
 import top.appx.service.MailService;
 import top.appx.service.NotifyService;
+import top.appx.util.HttpUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -27,11 +28,15 @@ public class NotifyServiceImpl implements NotifyService {
     public void save(Notify notify) {
 
         logger.info("发送消息 ="+notify);
+
+
         try {
 
             switch (notify.getType()){
                 default:
-                    mailService.sendHtmlMail(notify.getTarget(), notify.getTitle(), notify.getContent());
+                    String title = notify.getTitle();
+
+                    mailService.sendHtmlMail(notify.getTarget(), title, notify.getContent());
                     break;
             }
 
@@ -46,6 +51,8 @@ public class NotifyServiceImpl implements NotifyService {
         notify.setCreateTime(new Date());
 
         notifyDao.insert(notify);
+
+
 
     }
 

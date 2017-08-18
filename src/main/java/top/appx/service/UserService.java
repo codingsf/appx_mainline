@@ -44,4 +44,17 @@ public interface UserService {
     User findByQQOpenId(String openId);
 
     void registerByQQOld(User userEntity);
+
+    void inviteAward(Long userId);
+
+    User findById(Long id);
+
+    List<User> findByInviteUserId(Long inviteUserId);
+
+    void sign(Long id);
+
+    /**
+     * 每天零点重置方法
+     */
+    void resetByAnyDay0();
 }

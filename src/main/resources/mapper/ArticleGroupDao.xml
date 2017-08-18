@@ -16,6 +16,10 @@
       order by id desc
     </select>
 
+    <update id="updateLastArticle">
+        update articleGroup set lastArticleId=#{articleId} where id=#{id}
+    </update>
+
 
     <select id="findByName" resultType="ArticleGroup">
         select * from articleGroup where name=#{name}
@@ -40,7 +44,7 @@
     
     <select id="index" resultType="top.appx.entity.vo.ArticleGroupVO">
         select *,
-        (select count(*) from article where articleGroupId=ag.id) as total,
+        articleCount as total,
         (select count(*) from articlesubscribe where articleGroupId=ag.id and userId=#{userId}) as subscribe
         from articleGroup as  ag
         ORDER BY (SELECT COUNT(*) FROM articlesubscribe WHERE articleGroupId=ag.id) DESC

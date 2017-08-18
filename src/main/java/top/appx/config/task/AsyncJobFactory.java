@@ -16,7 +16,9 @@ public class AsyncJobFactory extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         try {
-            QrtzJob qrtzJob = (QrtzJob) context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
+            Object obj  = context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
+
+            QrtzJob qrtzJob = (QrtzJob) obj;
 
             //获取spring上下文
             ApplicationContext applicationContext = (ApplicationContext)context.getScheduler().getContext().get("applicationContextKey");

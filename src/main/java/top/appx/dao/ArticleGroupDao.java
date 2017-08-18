@@ -25,4 +25,6 @@ public interface ArticleGroupDao extends BaseDao<ArticleGroup> {
 
     void unsubscribe(@Param("articleGroupId") Long articleGroupId, @Param("userId") long userId);
 
+    void updateLastArticle(@Param("articleId") Long articleId,@Param("id") long articleGroupId);
+
 }
