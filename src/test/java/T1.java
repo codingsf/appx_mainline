@@ -24,16 +24,10 @@ import static com.sun.webkit.network.URLs.newURL;
 public class T1 {
     @Test
     public void test1()throws Exception{
-        InetSocketAddress socksaddr = new InetSocketAddress("news.appx.top",1080);
 
-
-        InetSocketAddress socketAddress=new InetSocketAddress(
-                InetAddress.getByName("59.110.171.129"),1080);
-        Proxy proxy = new Proxy(Proxy.Type.SOCKS,socksaddr);
-
-       String str = Jsoup.connect("https://twitter.com").proxy(proxy).get().html();
+       String str = Jsoup.connect("https://twitter.com").proxy("news.appx.top",8118).get().html();
       //  System.out.println(str);
-
+        System.out.println(str);
 
 
     }

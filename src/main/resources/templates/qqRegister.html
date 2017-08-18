@@ -3,70 +3,21 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
       lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
-    <script src="/lib/jquery-3.2.1.min.js"></script>
+    <th:block th:include="/common head"/>
     <script src="/lib/layer/layer.js"></script>
     <script src="/lib/layui/layui.js"></script>
-    <script src="/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
     <link rel="stylesheet" href="/lib/layui/css/layui.css"/>
-    <link rel="stylesheet" href="/lib/bootstrap-3.3.7/css/bootstrap.css"/>
 </head>
 <body style="padding-top: 80px;">
-<nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">燎火新闻网</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="/">首页</a>
-                </li>
-                <li>
-                    <a href="/articles">文章列表</a>
-                </li>
-                <li>
-                    <a href="/articleGroups">文章分组</a>
-                </li>
-                <shiro:hasAnyRoles name="管理员">
-                    <li>
-                        <a th:href="@{/admin}">管理</a>
-                    </li>
-                </shiro:hasAnyRoles>
-                <li>
-                    <a href="/help.html">帮助</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <shiro:guest>
-                    <li>
-                        <a href="/login">登录</a>
-                    </li>
-                    <li class="active">
-                        <a href="/register">注册</a>
-                    </li>
-                </shiro:guest>
-                <shiro:user>
-                    <li><a th:href="@{/logout}">退出登录</a></li>
-                </shiro:user>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container">
+
+<th:block th:include="/common :: nav(qqRegister)"></th:block>
+
+<div class="container" style="min-height: 700px;">
 <ol class="breadcrumb">
     <li><a href="#">首页</a></li>
     <li class="active">注册</li>
 </ol>
 </div>
-
 
 
 
@@ -216,13 +167,15 @@
 
 
     function getCheckCode(){
-        layer.msg("正在发送验证码邮件,该过程可能花费几十秒的时间,请耐心等待");
-        layer.load();
         var data = $("#mainForm").serializeJson();
         if(!data.email){
-            alert("请输入邮箱");
+            layer.msg("请输入邮箱");
             return;
         }
+
+        layer.msg("正在发送验证码邮件,该过程可能花费几十秒的时间,请耐心等待");
+        layer.load();
+
         $.ajax({
             url:"/user/auth?mail="+data.email,
             success:function(){
@@ -260,15 +213,7 @@
 
 
 
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
+<th:block th:include="/common :: footer"></th:block>
 
 
 

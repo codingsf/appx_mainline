@@ -3,92 +3,17 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
 >
 <head>
-    <meta charset="UTF-8"/>
-    <title th:text="#{webTitle}"></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="这是一个炒币资讯订阅网站,将最新的炒币资讯(各大交易所上公告,推特,微信,等等)第一时间通知给你" />
-    <meta name="keyword" content="燎火,燎火新闻网,新闻,资讯,软件交流" />
-    <script src="/lib/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="lib/bootstrap-3.3.7/css/bootstrap.css"/>
-    <script src="/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
-
+    <th:block th:include="/common :: head" />
     <style type="text/css">
-        footer{
-            background-color: #2a2730;
-            height: 180px;
-        }
-        footer a{
-            color:#ffffff;
-        }
-
-        .block{
-            margin-top: 20px;
-            padding: 30px;
-            background: #fbfbfb;
-            box-shadow: 1px 1px 1px #e5e5e5;
-        }
-        img.avatar{
-            width:60px;
-            height: 60px;
-            border-radius: 1px;
+        a.article{
+            font-size: large;
         }
     </style>
-
 </head>
+
 <body style="padding-top: 80px;    background-color: #f0f0f0;">
-<nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">燎火新闻网</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="/">首页</a>
-                </li>
-                <li>
-                    <a href="/articles">文章列表</a>
-                </li>
-                <li>
-                    <a href="/articleGroups">文章分组</a>
-                </li>
-                <shiro:hasAnyRoles name="管理员">
-                    <li>
-                        <a th:href="@{/admin}">管理</a>
-                    </li>
-                </shiro:hasAnyRoles>
-                <script>
-                    if(window.parent==window){
-                        document.write('<li><a href="/chat">聊天</a></li>')
-                    }
-                </script>
 
-                <li>
-                    <a href="/help.html">帮助</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <shiro:guest>
-                    <li>
-                        <a href="/login">登录</a>
-                    </li>
-                    <li>
-                        <a href="/register">注册</a>
-                    </li>
-                </shiro:guest>
-
-                <shiro:user>
-                    <li><a th:href="@{/logout}">退出登录</a></li>
-                </shiro:user>
-            </ul>
-        </div>
-    </div>
-</nav>
+<th:block th:include="/common :: nav(index)" />
 
 <shiro:guest>
     <div class="container">
@@ -107,7 +32,7 @@
                     <table class="table table-hover table-striped">
                         <tr th:each="model:${articleList}" th:object="${model}">
                             <td>
-                                <a th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
+                                <a class="article" th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
                                 (<a style="color:gray;" th:href="@{'/articleGroups/'+*{articleGroupId}}" th:text="*{articleGroupName}"></a>)
                                 <span style="font-style: italic;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
                             </td>
@@ -154,37 +79,7 @@
     </div>
 
 
-<footer>
-    <div class="container" style="margin: 30px;">
-        <h4 style="padding:10px;">
-            <a href='http://www.jubi.com/i_obziuj'>聚币网</a> |
-            <a href='http://www.huobi.com'>火币网</a> |
-            <a href='http://yunbi.com'>云币网</a> |
-            <a href='https://bter.com/ref/360698'>比特儿</a> |
-            <a href='http://btc9.com'>币久网</a> |
-            <a href="http://www.btc38.com/">比特时代</a> |
-            <a href="http://www.bitstar.com/?id=106790">比特星</a>
-        </h4>
-
-        <h5 style="color:#bbb;max-width: 400px;">
-            本网站为技术性交流网站,提供新闻咨询订阅功能,后面会逐渐开发更多其他的功能,敬请期待
-        </h5>
-
-        <a href="http://www.miitbeian.gov.cn">皖ICP备15015583号-2</a>
-    </div>
-
-</footer>
-
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
+<th:block th:include="/common :: footer"/>
 
 </body>
 </html>

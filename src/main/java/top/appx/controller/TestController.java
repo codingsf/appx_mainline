@@ -12,16 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 public class TestController {
-    @RequestMapping("/test")
-    public String tt(ModelMap modelMap, HttpServletRequest request){
-        Map<String,String[]> map = request.getParameterMap();
-
-        for (String s : map.keySet()) {
-            System.out.println(s+"===="+map.get(s));
-        }
-        System.out.println("invoke test");
-        return "test";
+    @RequestMapping("/t1")
+    public String t1(){
+        return "/t1";
     }
+
 }

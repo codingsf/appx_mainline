@@ -140,7 +140,8 @@ public class CollectJob {
                 }
                 throw new Exception("获取不到文章");
             }
-            for (Element element : elements) {
+            for(int i=elements.size()-1;i>=0;i--){
+                Element element = elements.get(i);
                 String href = element.attr("href");
                 URI base=new URI(collectParam.getListUrl());//基本网页URI
                 URI abs=base.resolve(href);//解析于上述网页的相对URL，得到绝对URI

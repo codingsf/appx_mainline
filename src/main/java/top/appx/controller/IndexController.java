@@ -68,10 +68,11 @@ public class IndexController extends BaseController {
         return "/frame";
     }
 
-    @RequestMapping("/footer")
-    public String footer(){
-        return "/footer";
+    @RequestMapping("/help")
+    public String help(){
+        return "/help";
     }
+
 
 
 

@@ -97,7 +97,7 @@ public class NotifyAspect {
                             for (String str : strs) {
                                 for(int i=0;i<5;i++) {
                                     try {
-                                        String msg = articleNameF + "有新文章:<" + article.getTitle() + ">,链接:http://news.appx.top/articles/" + article.getId();
+                                        String msg = articleNameF + "有新文章:<" + article.getTitle() + ">,链接:http://"+appxConfig.getDomain()+"/articles/" + article.getId();
                                         HttpUtil.httpPost("http://"+appxConfig.getQqreboot()+"/send_group_msg", "group_id=" + str + "&message=" + msg);
                                         break;
                                     }catch (Exception ex){

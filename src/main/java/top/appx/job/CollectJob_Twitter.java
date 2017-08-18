@@ -37,10 +37,7 @@ public class CollectJob_Twitter extends CollectJob  {
                 .proxy(appxConfig.getProxy_host(),appxConfig.getProxy_port())
                 .get();
         Elements items = doc.select("li.stream-item");
-        for (int i = 0; i < items.size(); i++) {
-            if(i>=3){
-                break;
-            }
+        for (int i = (items.size()>3?3: items.size())-1; i>=0; i--) {
             Element item = items.get(i);
             String content = item.select(".tweet-text").html();
             String timeStr = item.select(".js-short-timestamp").get(0).attr("data-time-ms");
