@@ -111,6 +111,16 @@ public class CollectJob {
 
 
         try{
+
+            Element element = doc.select(collectParam.getContentSel()).first();
+            for (Element a : element.select("a")) {
+                URI base=new URI(url);//基本网页URI
+                URI abs=base.resolve(a.attr("href"));//解析于上述网页的相对URL，得到绝对URI
+                URL absURL=abs.toURL();//转成URL
+                String href = absURL.toString();
+                a.attr("href",href);
+            }
+
             content = doc.select(collectParam.getContentSel()).first().html();
         }catch (Exception ex){
             logger.info(collectParam.getName()+" 获取文章发表内容出错",ex);

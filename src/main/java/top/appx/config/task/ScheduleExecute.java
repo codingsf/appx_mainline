@@ -36,15 +36,12 @@ public class ScheduleExecute {
     private static CollectParamDao collectParamDao;
 
     public static void execute(ApplicationContext applicationContext, QrtzJob qrtzJob){
-
-
         long startTime = System.currentTimeMillis();
         try {
             ScheduleExecute.invokMethod(qrtzJob,applicationContext);
         } catch (Exception e) {
             //任务执行总时长
             long times = System.currentTimeMillis() - startTime;
-
             log.error("调度任务执行失败",e);
         }finally {
         }

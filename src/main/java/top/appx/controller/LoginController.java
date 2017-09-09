@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 
 @Controller
@@ -132,6 +133,7 @@ public class LoginController extends BaseController {
         notify.setTitle(msg);
         notify.setContent(msg);
         notifyService.save(notify);
+
         session.setAttribute("checkCode_"+mail,checkCode);
     }
     @PostMapping("/user/register")
@@ -141,6 +143,8 @@ public class LoginController extends BaseController {
 
         if(session.getAttribute("inviteUserId")!=null){
             userEntity.setInviteUserId((Long)session.getAttribute("inviteUserId"));
+        }else{
+            userEntity.setInviteUserId(10L);//id为10的用户是机器人,默认奖励给机器人
         }
 
         System.out.println("注册中");
@@ -179,9 +183,6 @@ public class LoginController extends BaseController {
         }
 
 
-        if(userEntity.getInviteUserId()!=null){
-            userService.inviteAward(userEntity.getInviteUserId());
-        }
         HashMap<String,Object> hashMap = new HashMap<String,Object>();
         hashMap.put("success",true);
         new Thread(new Runnable() {
@@ -208,7 +209,10 @@ public class LoginController extends BaseController {
             //每个Realm都能在必要时对提交的AuthenticationTokens作出反应
             //所以这一步在调用login(token)方法时,它会走到MyRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法
             //logger.info("对用户进行登录验证..验证开始! username = {}", username);
+            long startTime = new Date().getTime();
             currentUser.login(token);
+            long endtime = new Date().getTime();
+            logger.info("耗时:"+(endtime-startTime));
             //验证是否登录成功
             if(currentUser.isAuthenticated()){
              //   logger.info("对用户进行登录验证..验证通过! username = {}", username);
@@ -244,6 +248,7 @@ public class LoginController extends BaseController {
     public Object login(String username,String password) {
         //获取当前的Subject
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, true);
+
         return login(token);
 
     }

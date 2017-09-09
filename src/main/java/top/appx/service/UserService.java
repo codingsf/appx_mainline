@@ -57,4 +57,13 @@ public interface UserService {
      * 每天零点重置方法
      */
     void resetByAnyDay0();
+
+    List<User> moneyTop10();
+
+    /**
+     * 更新提醒设置
+     * @param user
+     */
+
+    void updateNotifySz(User user);
 }

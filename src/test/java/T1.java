@@ -25,7 +25,9 @@ public class T1 {
     @Test
     public void test1()throws Exception{
 
-       String str = Jsoup.connect("https://twitter.com").proxy("news.appx.top",8118).get().html();
+        String str=  HttpUtil.httpPost("https://twitter.com","");
+
+       //String str = Jsoup.connect("https://twitter.com").proxy("47.94.143.211",8118).get().html();
       //  System.out.println(str);
         System.out.println(str);
 

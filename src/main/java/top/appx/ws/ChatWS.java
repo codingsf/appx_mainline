@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @ServerEndpoint("/chat")
-@Component
+//@Component
 public class ChatWS {
     private static Map<Long, ChatWS> wsMap = new HashMap<>();
     private Session session;

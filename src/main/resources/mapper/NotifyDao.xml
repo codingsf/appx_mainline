@@ -3,10 +3,17 @@
 <mapper namespace="top.appx.dao.NotifyDao">
 
     <insert id="insert">
-        insert into notify(target,type,title,content,createTime,status,errorMsg)
-        values(#{target},#{type},#{title},#{content},#{createTime},#{status},#{errorMsg})
+        insert into notify(target,type,title,content,createTime,status,errorMsg,targetUserId)
+        values(#{target},#{type},#{title},#{content},#{createTime},#{status},#{errorMsg},#{targetUserId})
     </insert>
 
+    <select id="waitDeal" resultType="Notify">
+        SELECT * from notify where status='wait' limit 10;
+    </select>
+    
+    <delete id="updateDealResult">
+        update notify set status=#{status},errorMsg=#{errorMsg},dealTime=#{dealTime} where id=#{id}
+    </delete>
 
     <select id="find" resultType="Notify">
         select

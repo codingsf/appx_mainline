@@ -15,11 +15,17 @@
 
 <body style="padding-top: 80px;">
 
-<div class="container">
+<div class="container" style="min-height: 700px;">
     <div class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-            <input style="width: 250px;" id="keyWord" type="text" class="form-control" placeholder="搜索关键字" oninput="searchSubmit()" autocomplete="off"/>
-        </div>
+        <form action="/search" method="GET">
+            <div class="form-group input-group">
+                <input th:value="${keyWord}" name="keyWord" style="width: 250px;" id="keyWord" type="text" class="form-control" placeholder="搜索关键字" oninput="searchSubmit()" autocomplete="off"/>
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="this.form.submit()">Go!</button>
+             </span>
+            </div>
+            <input type="submit" style="display: none;"/>
+        </form>
     </div>
     <table class="table table-hover table-striped">
         <thead>
@@ -38,8 +44,7 @@
                 <a class="article" th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
             </td>
             <td>
-                <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
-
+                <span th:if="*{createTime}" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
             </td>
             <td>
                 <th:block th:if="*{occTime}">
@@ -49,7 +54,6 @@
         </tr>
     </table>
 </div>
-
 
 <th:block th:include="/common :: footer"/>
 </body>

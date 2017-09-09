@@ -42,6 +42,7 @@ public class JubiNewTop {
                     if(articleService!=null) {
                         String title = "聚币网有新的横幅产生";
                         String content ="软件检测到"+ title;
+                        content += "\n"+s;
                         String url = null;
                         Date date = new Date();
                         Article article = ArticleFactory.createArticle("notice_newsappx", title, content, url, date);

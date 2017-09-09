@@ -3,7 +3,9 @@ package top.appx.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import top.appx.config.AppxConfig;
 import top.appx.dao.ArticleDao;
 import top.appx.dao.ArticleGroupDao;
 import top.appx.entity.Article;
@@ -25,6 +27,19 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleGroupDao articleGroupDao;
 
 
+    @Autowired
+    private AppxConfig appxConfig;
+
+    private void delRedisByArticleId(long id){
+        String key = appxConfig.getDomain()+ "_articleDetailVO_id_"+id;
+        String key2 = appxConfig.getDomain()+"_article_id_"+id;
+        redisTemplate.delete(key);
+        redisTemplate.delete(key2);
+    }
+
+
+
+
     @Override
     public PageInfo<Article> findPage(Object search,Integer pageNum, Integer pageSize) throws Exception {
         PageHelper.startPage(pageNum,pageSize);
@@ -34,8 +49,29 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public PageInfo<ArticleIndexVO> findPageVO(Object search,Integer pageNum, Integer pageSize) throws Exception {
+        PageHelper.startPage(pageNum,pageSize);
+        Article article = new Article();
+        List<ArticleIndexVO> articleList = articleDao.findVO(search);
+        return new PageInfo<ArticleIndexVO>(articleList);
+    }
+   // private RedisTemp
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Override
     public Article findById(Long id) {
-        return articleDao.selectByPrimaryKey(id);
+        String key = appxConfig.getDomain()+ "_articleDetailVO_id_"+id;
+        Object object = redisTemplate.opsForValue().get(key);
+        if(object==null){
+            Article article =articleDao.selectByPrimaryKey(id);
+            redisTemplate.opsForValue().set(key,article);
+            return article;
+        }else{
+            return (Article)object;
+        }
+
     }
 
     @Override
@@ -51,7 +87,6 @@ public class ArticleServiceImpl implements ArticleService {
         }
         article.setCreateTime(new Date());
         articleDao.insert(article);
-
 
     }
 
@@ -71,7 +106,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void deleteByIds(List<Long> ids) {
+        ids.forEach(id -> {
+            delRedisByArticleId(id);
+        });
         articleDao.deleteByPrimaryKeys(ids);
+
     }
 
     @Override
@@ -92,11 +131,22 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDetailVO detail(Long id) {
-        return articleDao.detail(id);
+        String key = appxConfig.getDomain()+ "_articleDetailVO_id_"+id;
+        Object object = redisTemplate.opsForValue().get(key);
+        if(object==null){
+            ArticleDetailVO article =articleDao.detail(id);
+            redisTemplate.opsForValue().set(key,article);
+            return article;
+        }else{
+            return (ArticleDetailVO)object;
+        }
+
+       // return articleDao.detail(id);
     }
 
     @Override
     public void update(Article article) {
+        delRedisByArticleId(article.getId());
         articleDao.updateByPrimaryKey(article);
     }
 

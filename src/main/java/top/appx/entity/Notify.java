@@ -5,13 +5,23 @@ import java.util.Date;
 public class Notify {
     private Long id;
     private String target;//手机号或者邮箱
+    private Long targetUserId;//目标用户Id
     private String type;//类型,email,sms
     private String title;
     private String content;
     private Date createTime;
     private String status;
     private String errorMsg;
+    private Date dealTime;
 
+
+    public Date getDealTime() {
+        return dealTime;
+    }
+
+    public void setDealTime(Date dealTime) {
+        this.dealTime = dealTime;
+    }
 
     public Long getId() {
         return id;
@@ -32,6 +42,14 @@ public class Notify {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public Long getTargetUserId() {
+        return targetUserId;
+    }
+
+    public void setTargetUserId(Long targetUserId) {
+        this.targetUserId = targetUserId;
     }
 
     public String getType() {

@@ -3,54 +3,83 @@
       th:object="${entity}"
 >
 <head>
-    <title><th:block th:text="*{title}"></th:block>-<th:block th:text="#{webTitle}"></th:block></title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <th:block th:include="/common :: head"></th:block>
 </head>
 <style type="text/css">
-    img{
-        max-width:100%;
+    img {
+        max-width: 100%;
     }
-    .block{
+
+    .block {
         margin-top: 20px;
         padding: 30px;
         background: #fbfbfb;
         box-shadow: 1px 1px 1px #e5e5e5;
     }
+
+    svg {
+        width: 25px;
+        height: 25px;
+    }
+
 </style>
-<body>
+<body style="background-color: #f0f0f0;">
 
-<div class="article">
-    <div class="title">
-        <h3 class="title" th:utext="*{title}"></h3>
-        <p class="prot" style="color:#777;">
-            <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
-            <span class="from">
-                <a th:text="*{articleGroupName}" th:href="'//'+${domain}+'/articleGroups/'+*{articleGroupId}">
-                </a>
-                <th:block th:if="*{url}">
-                    <a target="_blank" th:href="*{url}" style="color:gray;">原文</a>
-                </th:block>
-                <a  th:href="'//'+${domain}">首页</a>
-            </span>
-        </p>
-        <p th:if="*{occTime}" style="text-align: right;">
-            发生时间:
-            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm')}"></span>
-        </p>
+<th:block th:include="/common :: nav(articles_detail)"></th:block>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="article block" style="min-height: 700px;">
+                <div class="title">
+                    <h2 style="text-align: left;padding-bottom: 2px;" class="title" th:utext="*{title}"></h2>
+                    <div>
+                        <p class="prot" style="color:#777;font-size: large;">
+                            <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                            <span class="from">
+                                <a th:text="*{articleGroupName}"
+                                   th:href="'//'+${domain}+'/articleGroups/'+*{articleGroupId}">
+                                </a>
+                                <th:block th:if="*{url}">
+                                <a target="_blank" th:href="*{url}" style="color:gray;">原文</a>
+                            </th:block>
+
+
+                            </span>
+                        </p>
+                        <p th:if="*{occTime}" style="text-align: right;">
+                            发生时间:
+                            <span th:text="*{#dates.format(occTime, 'yyyy-MM-dd HH:mm')}"></span>
+
+                        </p>
+                    </div>
+                </div>
+                <hr/>
+
+                <div th:utext="*{content}" class="content">
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="block">
+                <div style="text-align: center;">
+                    QQ群
+                </div>
+                <hr/>
+                <div style="text-align: center;">
+                    155724471
+                    <a target="_blank"
+                       href="//shang.qq.com/wpa/qunwpa?idkey=47b40187371b28fb3603c4d65c25fa0906fb5186f5c403ddde5457f3bdcff9a7"><img
+                            border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="比特币交流群"
+                            title="比特币交流群"/></a>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <hr />
-    <div th:utext="*{content}" class="content">
-    </div>
+
 </div>
-
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
+<th:block th:include="/common :: footer"/>
 </body>
 </html>

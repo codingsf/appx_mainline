@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <th:block th:include="/common :: head"></th:block>
+    <script src="/lib/layer/layer.js"></script>
+    <link rel="stylesheet" href="/lib/layer/skin/default/layer.css" />
+</head>
+<body th:object="${entity}">
+<div style="padding:10px;height: 120px;">
+
+    <div>
+        名称:
+    <label th:text="${entity.name}">
+    </label>
+    </div>
+    <div>
+        <form action="javascript:ok();">
+            <input type="submit" style="display: none;" />
+            <input id="id" type="hidden" th:value="*{id}"/>
+            价格:
+            <input id="sellPrice" th:value="*{sellPrice}" />
+        </form>
+
+    </div>
+    <div>
+        简介:
+        <span th:text="*{description}"></span>
+    </div>
+</div>
+
+<hr />
+<div style="text-align: right;padding-right:5px;">
+    <button class="btn btn-default" onclick="ok()">确认</button>
+    <button class="btn btn-default" onclick="cancel()">取消</button>
+</div>
+<script>
+    function ok(){
+        var id = $("#id").val();
+        var sellPrice = $("#sellPrice").val();
+        var loadIndex = layer.load();
+        $.ajax({
+            url:"/goods/"+id,
+            method:"PUT",
+            data:{
+                sellPrice:sellPrice
+            },
+            success:function(){
+                window.parent.layer.closeAll();
+                window.parent.location.reload();
+            },
+            error:function(data){
+                if(data.responseText){
+                    layer.msg(data.responseText);
+                }else{
+                    layer.msg("Error");
+                }
+            },
+            complete:function(){
+                layer.close(loadIndex);
+            }
+        })
+
+
+//        window.parent.layer.closeAll();
+    }
+
+    function cancel(){
+        window.parent.layer.closeAll();
+    }
+</script>
+
+
+</body>
+</html>

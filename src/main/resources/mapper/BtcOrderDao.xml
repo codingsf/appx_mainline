@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.BtcOrderDao">
+    
+    <insert id="insert">
+        insert into btcorder(coin,date,price,amount,tid,type,exchange)
+        values(#{coin},#{date},#{price},#{amount},#{tid},#{type},#{exchange})
+    </insert>
+
+
+    <select id="exist" resultType="boolean">
+        SELECT count(*) from btcorder where tid=#{tid} and coin=#{coin} and date=#{date}  limit 1
+    </select>
+
+</mapper>

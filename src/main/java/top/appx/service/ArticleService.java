@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface ArticleService {
     PageInfo<Article> findPage(Object search,Integer pageNum , Integer pageSize) throws Exception;
+    PageInfo<ArticleIndexVO> findPageVO(Object search,Integer pageNum, Integer pageSize) throws Exception;
+
     Article findById(Long id);
 
     void save(Article article);

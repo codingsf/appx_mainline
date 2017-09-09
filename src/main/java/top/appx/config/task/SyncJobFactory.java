@@ -25,7 +25,6 @@ public class SyncJobFactory extends QuartzJobBean {
             QrtzJob qrtzJob = (QrtzJob) context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
             //获取spring上下文
             ApplicationContext applicationContext = (ApplicationContext)context.getScheduler().getContext().get("applicationContextKey");
-
             //执行调度任务
             ScheduleExecute.execute(applicationContext, qrtzJob);
 

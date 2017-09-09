@@ -36,6 +36,8 @@ function Dg() {
             { field: "nickname", title: "昵称", width: 100},
             { field: "email", title: "邮箱", width: 100 },
             { field: "phone", title: "手机", width: 100 },
+            { field: "qq", title: "qq", width: 100 },
+            { field: "money", title: "积分", width: 100 },
             { field: "createTime", title: "注册时间", width: 100 }
         );
         return columns;

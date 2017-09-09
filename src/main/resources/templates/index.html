@@ -18,8 +18,11 @@
 <shiro:guest>
     <div class="container">
         <h3>
-        这是一个炒币资讯订阅网站,将最新的<a href='/articleGroups'>炒币资讯</a>(各大交易所上公告,推特,微信,等等)第一时间通知给你,请注册后选择你所需要订阅的新闻
-            不会用的人可以加qq群:155724471,该网站上的最新消息会自动通过机器人发送到qq群
+        将最新的<a href='/articleGroups'>资讯</a>(各大交易所上公告,推特,微信,等等)通过邮件或qq第一时间通知给你,
+            请注册后选择你所需要订阅的新闻
+            不会用的人可以加qq群:155724471
+            <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=47b40187371b28fb3603c4d65c25fa0906fb5186f5c403ddde5457f3bdcff9a7"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="比特币交流群" title="比特币交流群" /></a>
+                      ,该网站上的最新消息会自动通过机器人发送到qq群,本网站服务全部免费,不会收取任何费用
         </h3>
     </div>
 </shiro:guest>
@@ -55,6 +58,31 @@
                             <th:block th:if="!${user.signTime}">
                                 <a href="/sign">签到</a>
                             </th:block>
+                            <hr />
+                            我的账单:
+                            <ul>
+                                <li th:each="model:${transfers}" th:object="${model}" >
+                                    <th:block th:if="${model.sUserId==user.id}">
+                                        支出
+                                        -><span th:text="*{dUserNickname}"></span>
+                                        (<span th:text="*{title}"></span>)
+                                        : <span style="color:green;" th:text="*{'-'+money}"></span>
+                                    </th:block>
+
+                                    <th:block th:if="${model.sUserId!=user.id}">
+                                        进账 by:
+                                        <span th:text="*{sUserNickname}"></span>
+                                        (<span th:text="*{title}"></span>)
+                                        : <span style="color:red;" th:text="*{'+'+money}"></span>
+                                    </th:block>
+                                    (<span style="color:gray;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>)
+                                </li>
+                            </ul>
+                            <div style="text-align: right;">
+                                <a href="/user">更多>></a>
+
+                            </div>
+
                         </div>
                     </shiro:user>
                     <shiro:guest>
@@ -72,6 +100,13 @@
                     </shiro:guest>
                 </div>
                 <div class="block" style="margin-top: 30px;">
+                    积分排行榜(本网站积分总量:100w)
+                    <ol>
+                        <li th:each="model:${maxMoneyUsers}" th:object="${model}">
+                            <a th:href="*{'/user/'+id}" th:text="*{nickname}"></a>
+                            <span th:text="*{money}" style="color:red;"></span>
+                        </li>
+                    </ol>
 
                 </div>
             </div>

@@ -14,10 +14,7 @@ import top.appx.entity.Article;
 import top.appx.entity.Role;
 import top.appx.entity.User;
 import top.appx.entity.UserRole;
-import top.appx.exception.EmailExistException;
-import top.appx.exception.MsgException;
-import top.appx.exception.PhoneExistException;
-import top.appx.exception.UsernameExistException;
+import top.appx.exception.*;
 import top.appx.service.UserService;
 import top.appx.util.PasswordUtil;
 import top.appx.util.StringUtil;
@@ -51,9 +48,16 @@ public class UserServiceImpl implements UserService {
     public void saveUserAndUserRole(User user, Long roleId) {
         Date now = new Date();
 
+        if(user.getUsername().contains("@")){
+            throw new MsgException("用户名中不能包含@符号");
+        }
+
         if(userDao.findByUsername(user.getUsername())!=null){
             throw new UsernameExistException();
         }
+
+
+
 
         if(!StringUtil.isNullOrEmpty(user.getPhone())){
             if(userDao.findByPhone(user.getPhone())!=null){
@@ -61,9 +65,18 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        if(!StringUtil.isNullOrEmpty(user.getQq())){
+            if(userDao.findByQq(user.getQq())!=null){
+                throw new QQExistException();
+            }
+        }
+
+
         if(userDao.findByEmail(user.getEmail())!=null){
             throw new EmailExistException();
         }
+
+
 
         if(!StringUtil.isNullOrEmpty(user.getQqOpenId()) && userDao.findByQQOpenId(user.getQqOpenId())!=null){
             throw new RuntimeException();
@@ -127,12 +140,12 @@ public class UserServiceImpl implements UserService {
         user.setQqOpenId(userEntity.getQqOpenId());
         userDao.updateQQOpenId(user);
 
-
     }
 
     @Override
     public void inviteAward(Long userId) {
-        userDao.inviteAward(userId);
+
+
     }
 
     @Override
@@ -153,6 +166,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void resetByAnyDay0() {
         userDao.resetByAnyDay0();
+    }
+
+
+    @Override
+    public List<User> moneyTop10() {
+        return userDao.moneyTop10();
+    }
+
+    @Override
+    public void updateNotifySz(User user) {
+        userDao.updateNotifySz(user);
     }
 
 
@@ -180,8 +204,32 @@ public class UserServiceImpl implements UserService {
         return userDao.findSubscribeUser(articleGroupId);
     }
 
+    @Transactional
     @Override
     public void update(User user) {
+        User tmp = null;
+
+        if(StringUtil.isNullOrEmpty(user.getQq())){
+            tmp = userDao.findByQq(user.getQq());
+            if(tmp!=null && tmp.getId()!=user.getId()){
+                throw new MsgException("qq号已经被占用");
+            }
+        }
+
+        tmp = userDao.findByEmail(user.getEmail());
+        if(tmp!=null && tmp.getId()!=user.getId()){
+            throw new MsgException("邮箱已经被占用");
+        }
+        if(!StringUtil.isNullOrEmpty(user.getPhone())){
+            tmp = userDao.findByPhone(user.getPhone());
+            if(tmp!=null && tmp.getId()!=user.getId()){
+                throw new MsgException("手机号不能为空");
+            }
+        }
+
+
+
+        user.setEmailNotify(false);
         userDao.updateByPrimaryKey(user);
     }
 

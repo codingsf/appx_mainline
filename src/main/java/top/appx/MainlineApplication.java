@@ -15,7 +15,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 @SpringBootApplication
 //@EnableScheduling
 @EnableWebSocket
-//@EnableCaching
+@EnableCaching
 //@EnableRedisHttpSession
 public class MainlineApplication extends SpringBootServletInitializer {
 

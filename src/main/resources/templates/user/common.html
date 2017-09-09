@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Title</title>
+    </head>
+<body>
+
+<th:block th:fragment="zhangdan">
+    <div>
+        账单:
+        <ul>
+            <li th:each="model:${transfers}" th:object="${model}">
+                <th:block th:if="${model.sUserId==entity.id}">
+                    支出
+                    -><span th:text="*{dUserNickname}"></span>
+                    (<span th:text="*{title}"></span>)
+                    : <span style="color:green;" th:text="*{'-'+money}"></span>
+                </th:block>
+
+                <th:block th:if="${model.sUserId!=entity.id}">
+                    进账 by:
+                    <span th:text="*{sUserNickname}"></span>
+                    (<span th:text="*{title}"></span>)
+                    : <span style="color:red;" th:text="*{'+'+money}"></span>
+                </th:block>
+                (<span style="color:gray;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>)
+            </li>
+        </ul>
+    </div>
+</th:block>
+</body>
+</html>

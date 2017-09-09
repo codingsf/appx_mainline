@@ -60,7 +60,6 @@ public class ExceptionAspect {
     }
     private void writeResponse(ResponseEntity responseEntity){
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-
         if(responseEntity!=null) {
             response.reset();
             response.setCharacterEncoding("UTF-8");

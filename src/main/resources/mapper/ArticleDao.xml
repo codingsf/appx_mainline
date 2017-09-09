@@ -20,7 +20,7 @@ order by id desc-->
         (select name from articleGroup where id=article.articleGroupId) as articleGroupName
         FROM article
         ORDER BY id DESC
-        limit 20
+        limit 35
 
     </select>
 
@@ -35,6 +35,20 @@ order by id desc-->
         order by articleGroup.lastArticleId desc
 
 
+    </select>
+    
+    <select id="findVO" resultType="top.appx.entity.vo.ArticleIndexVO">
+        select *,
+        ag.name as articleGroupName
+        from article
+        left join articleGroup ag on ag.id = article.articleGroupId
+
+        where 1=1
+        <if test="title!=null and title.length()!=0">
+            and title like  CONCAT('%',#{title},'%')
+        </if>
+
+        order by article.id desc
     </select>
 
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.GoodsDao">
+
+    
+    <select id="selectByPrimaryKey" resultType="Goods">
+        select * from goods where id=#{id}
+    </select>
+    
+    <update id="updateByPrimaryKey">
+        update goods set sellPrice=#{sellPrice} where id=#{id}
+    </update>
+    <delete id="deleteByPrimaryKey">
+        delete from goods where id=#{id}
+    </delete>
+    <update id="updateNum">
+        update goods set num=#{num} where id=#{id}
+    </update>
+
+    <select id="findByUser" resultType="Goods">
+        select *  from goods where ownerUserId=#{ownerUserId}
+    </select>
+
+    <insert id="insert">
+        insert into goods(name,flag,ownerUserId,num,description,img32,user1Id)
+        values(#{name},#{flag},#{ownerUserId},#{num},#{description},#{img32},#{user1Id})
+    </insert>
+
+    <select id="findVO" resultType="top.appx.entity.vo.GoodsVO">
+        select
+        *,
+        (select nickname from user where id=goods.ownerUserId) as ownerUserNickname,
+        (select nickname from user where id=goods.user1Id) as user1Nickname
+        from
+        goods where 1=1
+        <if test="user1Id!=null">
+            and user1Id = #{user1Id}
+        </if>
+        <if test="ownerUserId!=null">
+            and ownerUserId = #{ownerUserId}
+        </if>
+
+    </select>
+
+    
+</mapper>

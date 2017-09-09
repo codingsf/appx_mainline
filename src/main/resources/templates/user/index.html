@@ -3,49 +3,182 @@
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
 >
 <head>
-    <meta charset="UTF-8"/>
-    <title><th:block th:text="${entity.nickname}"/>的主页-<th:block th:text="#{webTitle}"/></title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+    <title th:text="${entity.nickname+'-燎火新闻网'}"></title>
+    <th:block th:include="/common :: head"></th:block>
+    <script src="/lib/layer/layer.js"></script>
+    <link rel="stylesheet" href="/lib/layer/skin/default/layer.css" />
+    <style type="text/css">
+        .sell{
+            background-color: #aaffaa;
+        }
+    </style>
 </head>
 <body th:object="${entity}">
-<h2>
-    <a href="/">回到首页</a>
-    <br  />
-欢迎您,
-<span th:text="*{nickname}"></span>
-<br />
-我的邀请链接:
-<input style="width:200px;" th:value="${'http://news.appx.top/invite/'+entity.id}" />
 
-<br />
-积分:
-<span style="color:red;" th:text="*{money}"></span>(邀请别人注册可以获得10积分/人,积分后面有大作用)
-<br />
-邮箱:
-<span th:text="*{email}"></span>
-<br />
-手机号:
-<span th:text="*{phone}"></span>
+<th:block th:include="/common :: nav(user)"></th:block>
 
-<br />
-我邀请的用户:
-<br />
-<ul>
-    <li th:each="model:${inviteUsers}" th:object="${model}" >
-        <span th:text="*{username}"></span>
-    </li>
-</ul>
-</h2>
+
+<div class="container" style="min-height: 700px;">
+    <h3 th:text="*{nickname}"></h3>
+    <th:block th:if="${self}">
+        <div class="input-group">
+            邀请链接:(邀请别人注册可以获得100积分/人+一张奴隶契约)
+            <input type="text" class="form-control" th:value="${'http://news.appx.top/invite/'+entity.id}"/>
+        </div>
+    </th:block>
+
+    <hr/>
+
+    <div>
+        积分:<span style="color:red;" th:text="*{money}"></span>
+    </div>
+    <div>
+        邮箱:
+        <th:block th:text="*{email}"></th:block>
+
+        <th:block th:if="${self}">
+            <th:block th:if="*{emailNotify}">
+                <a href="/user/szemailnotify?emailNotify=false">取消提醒</a>
+            </th:block>
+            <th:block th:if="*{!emailNotify}">
+                <a href="/user/szemailnotify?emailNotify=true">设置提醒</a>
+            </th:block>
+        </th:block>
+
+    </div>
+    <div>
+        手机号:
+        <span th:text="*{phone}"></span>
+    </div>
+    <div>
+        qq:
+        <span th:text="*{qq}"></span>
+        <th:block th:if="${self}">
+                <a href="/user/modifyqq">修改</a>
+                <span th:if="*{qqNotify}">
+                <a href="/user/szqqnotify?qqNotify=false">取消提醒</a>
+            </span>
+                <span th:if="*{!qqNotify}">
+                <a href="/user/szqqnotify?qqNotify=true">设置提醒</a>
+            </span>
+        </th:block>
+    </div>
+    <hr/>
+    物品:
+    <span th:if="${goodss.size()==0}">
+            无
+        </span>
+    <div class="row">
+        <div class="col-xs-6 col-md-3" th:each="model:${goodss}" th:object="${model}">
+            <div th:class="*{'thumbnail '+((sellPrice==null)?'':'sell')}" style="height: 200px;">
+                <div>
+                    <label>
+                        名称:
+                    </label>
+                    <span th:text="*{name}"></span>
+                    <th:block th:if="${model.flag=='slave_contract'}">
+                        (
+                        <a th:href="*{'/user/'+user1Id}">
+                            <span th:text="*{user1Nickname}"></span>
+                        </a>
+                        )
+                    </th:block>
+                </div>
+                <div>
+                    <label>
+                        数量:
+                    </label>
+                    <span th:text="*{num}"></span>
+                </div>
+
+                <div>
+                    <label>
+                        售卖价格:
+                    </label>
+                    <th:block th:if="*{sellPrice}">
+                        <span th:text="*{sellPrice}"></span>/个
+                        <th:block th:if="${!self}">
+                         <span>
+                            <a th:href="*{'javascript:buy('+id+','+sellPrice+')'}">购买</a>
+                        </span>
+                        </th:block>
+                    </th:block>
+                    <th:block th:if="*{sellPrice==null or sellPrice==0}">
+                        <span>不卖</span>
+                    </th:block>
+
+                    <th:block th:if="${self}">
+                        <span>
+                            <a th:href="*{'javascript:sell('+id+')'}">设置</a>
+                        </span>
+                    </th:block>
+
+
+                </div>
+
+
+                <div>
+                    <label>
+                        描述:
+                    </label>
+                    <span th:text="*{description}"></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr/>
+
+    <th:block th:include="/user/common :: zhangdan"></th:block>
+
+</div>
 
 <script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?e6b9bdcc403490c7a0b5175b174479d9";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
+    function sell(goodsId){
+        layer.open({
+            title:"售卖",
+            area: [null, '240px'],
+            type: 2,
+            content:"/goods/sell/"+goodsId
+        });
+    }
+
+    function buy(goodsId,sellPrice){
+        layer.confirm('确认要花费'+sellPrice+"积分购买1个吗", {icon: 3, title:'提示'}, function(index){
+            var loadIndex = layer.load();
+            $.ajax({
+                url:"/goods/"+goodsId,
+                method:"POST",
+                data:{
+                    sellPrice:sellPrice,
+                    num:1
+                },
+                success:function(){
+                    layer.msg("购买成功",function(){
+                        location.reload();
+                    })
+                },
+                error:function(data){
+                    if(data.responseText){
+                        layer.msg(data.responseText)
+                    }
+                    else{
+                        layer.msg("购买失败");
+                    }
+                },
+                complete:function(){
+                    layer.close(loadIndex);
+                }
+            })
+
+        });
+
+    }
 </script>
+
+
+
+<th:block th:include="/common :: footer"></th:block>
 
 </body>
 </html>

@@ -17,10 +17,30 @@ public class User extends BaseEntity {
     private String icard;
     private String avatar;
     private String qqOpenId;
-    private Long money;
+    private double money;
     private Long inviteUserId;
     private String roleName;
     private Date signTime;
+    private Boolean qqNotify;
+    private Boolean emailNotify;
+
+    private String qq;
+
+    public Boolean getQqNotify() {
+        return qqNotify;
+    }
+
+    public void setQqNotify(Boolean qqNotify) {
+        this.qqNotify = qqNotify;
+    }
+
+    public Boolean getEmailNotify() {
+        return emailNotify;
+    }
+
+    public void setEmailNotify(Boolean emailNotify) {
+        this.emailNotify = emailNotify;
+    }
 
     public Date getSignTime() {
         return signTime;
@@ -144,11 +164,11 @@ public class User extends BaseEntity {
         this.qqOpenId = qqOpenId;
     }
 
-    public Long getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(Long money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
@@ -158,5 +178,13 @@ public class User extends BaseEntity {
 
     public void setInviteUserId(Long inviteUserId) {
         this.inviteUserId = inviteUserId;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
     }
 }

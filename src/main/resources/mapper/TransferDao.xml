@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.appx.dao.TransferDao">
+    <select id="find" resultType="Transfer">
+        select * from transfer
+    </select>
+
+    <select id="findVO" resultType="top.appx.entity.vo.TransferVO">
+        select *,
+        (select nickname from user where id=transfer.sUserId) as sUserNickname,
+        (select nickname from user where id=transfer.dUserId) as dUserNickname
+         from transfer
+         order by id desc
+    </select>
+    
+    <select id="findUserId" resultType="top.appx.entity.vo.TransferVO">
+        select *,
+        (select nickname from user where id=transfer.sUserId) as sUserNickname,
+        (select nickname from user where id=transfer.dUserId) as dUserNickname
+        from transfer
+        where sUserId=#{userId} or dUserId=#{userId}
+        order by id desc
+        limit #{top}
+    </select>
+
+    <insert id="save">
+        insert into transfer(suserId,dUserId,description,createTime,money,title)
+        values(#{sUserId},#{dUserId},#{description},#{createTime},#{money},#{title})
+    </insert>
+</mapper>

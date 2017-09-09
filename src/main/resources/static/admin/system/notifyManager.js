@@ -36,6 +36,8 @@ function Dg() {
             { field: "title", title: "标题", width: 300},
             { field: "type", title: "类型", width: 50,formatter:function(val,src){
                 switch (val){
+                    case "qq":
+                        return "QQ";
                     case "email":
                         return "邮件";
                     case "sms":
@@ -47,11 +49,16 @@ function Dg() {
             { field: "status", title: "状态", width: 50,formatter:function(val,src){
                 switch (val){
                     case "success":
-                        return "成功";
+                        return "<span style='color:green;'>成功</span>";
+                    case "error":
+                        return "<span style='color:red;'>失败</span>";
+                    case "wait":
+                        return "<span style='color:blue'>等待</span>";
                 }
                 return '-';
             } },
             { field: "createTime", title: "创建时间", width: 100},
+            { field: "dealTime", title: "处理时间", width: 100},
             { field: "errorMsg", title: "错误信息", width: 100,formatter:function(val){
                 if(val){
                     return "<a title='"+val+"'>"+val+"</a>";

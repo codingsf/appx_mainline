@@ -1,13 +1,16 @@
 package top.appx.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.appx.config.AppxConfig;
 import top.appx.dao.NotifyDao;
 import top.appx.entity.Notify;
+import top.appx.exception.MsgException;
 import top.appx.service.MailService;
 import top.appx.service.NotifyService;
 import top.appx.util.HttpUtil;
@@ -22,38 +25,13 @@ public class NotifyServiceImpl implements NotifyService {
     private NotifyDao notifyDao;
 
 
-    @Autowired
-    private MailService mailService;
     @Override
-    public void save(Notify notify) {
-
+    public boolean save(Notify notify) {
         logger.info("发送消息 ="+notify);
-
-
-        try {
-
-            switch (notify.getType()){
-                default:
-                    String title = notify.getTitle();
-
-                    mailService.sendHtmlMail(notify.getTarget(), title, notify.getContent());
-                    break;
-            }
-
-            notify.setStatus("success");
-
-        }catch (Exception ex){
-            notify.setStatus("error");
-            notify.setErrorMsg(ex.getMessage());
-            logger.error("发送邮件失败",ex);
-        }
-
+        notify.setStatus("wait");
         notify.setCreateTime(new Date());
-
         notifyDao.insert(notify);
-
-
-
+        return true;
     }
 
     @Override
@@ -66,5 +44,15 @@ public class NotifyServiceImpl implements NotifyService {
     @Override
     public void delete(List<Long> ids) {
         notifyDao.deleteByPrimaryKeys(ids);
+    }
+
+    @Override
+    public List<Notify> waitDeal() {
+        return notifyDao.waitDeal();
+    }
+
+    @Override
+    public void dealResult(Notify notify) {
+        notifyDao.updateDealResult(notify);
     }
 }

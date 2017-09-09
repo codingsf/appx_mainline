@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <th:block th:include="/common :: head"></th:block>
+    <script src="/lib/layer/layer.js"></script>
+    <link rel="stylesheet" href="/lib/layer/skin/default/layer.css"/>
+</head>
+
+<body>
+
+qq:<input id="qq" name="qq" th:value="${entity.qq}" />
+
+<button onclick="submit()">修改</button>
+
+<script>
+    function submit(){
+        var  qq = $("#qq").val();
+        $.ajax({
+            url:"/user/modifyqq",
+            method:"POST",
+            data:{qq:qq},
+            success:function(){
+                layer.msg("修改成功,即将跳转到用户界面",function(){
+                    location.href = "/user";
+                });
+            },
+            error:function(data){
+                if(data.responseText){
+                    layer.msg(data.responseText)
+                }
+                else{
+                    layer.msg("修改出错");
+                }
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

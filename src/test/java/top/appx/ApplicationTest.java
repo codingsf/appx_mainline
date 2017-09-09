@@ -2,25 +2,37 @@ package top.appx;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import top.appx.entity.Notify;
+import top.appx.entity.User;
+import top.appx.job.BtcOrderJob_jubi;
+import top.appx.service.ArticleService;
+import top.appx.service.BtcOrderService;
 import top.appx.service.MailService;
 import top.appx.service.NotifyService;
 
 public class ApplicationTest extends BaseTest {
-    @Autowired
-    private MailService mailService;
-    @Autowired
-    private NotifyService notifyService;
-    @Test
-    public void test1()throws Exception{
-        System.out.println("开始发送邮件");
 
-        Notify notify = new Notify();
-        notify.setType("email");
-        notify.setTarget("799378666@qq.com");
-        notify.setTitle("ttttaaa");
-        notify.setContent("tttt");
-        notifyService.save(notify);
-        System.out.println("执行结束");
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    private BtcOrderService btcOrderService;
+
+    @Autowired
+    private BtcOrderJob_jubi btcOrderJob_jubi;
+
+
+    @Test
+    public void test()throws Exception{
+        btcOrderJob_jubi.execute();
     }
+
 }

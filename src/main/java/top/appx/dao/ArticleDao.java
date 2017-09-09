@@ -23,4 +23,6 @@ public interface ArticleDao extends BaseDao<Article> {
     boolean existUrl(String url);
 
     ArticleDetailVO detail(Long id);
+    List<ArticleIndexVO> findVO(Object search);
+
 }

@@ -14,8 +14,10 @@ public interface UserDao extends BaseDao<User> {
     User findByUsername(String username);
     User findByPhone(String phone);
     User findByEmail(String email);
+    User findByQq(String qq);
     List<User> find(User user);
     List<User> findSubscribeUser(long articleGroupId);
+
 
     void createIcard(User user);
 
@@ -28,11 +30,6 @@ public interface UserDao extends BaseDao<User> {
 
     void updateQQOpenId(User user);
 
-    /**
-     * 邀请奖励
-     * @param userId
-     */
-    void inviteAward(Long userId);
 
 
     List<User> findByInviteUserId(Long inviteUserId);
@@ -40,4 +37,10 @@ public interface UserDao extends BaseDao<User> {
     void sign(@Param("userId") Long id,@Param("signTime") Date date);
 
     void resetByAnyDay0();
+
+    void addMoney(@Param("userId")long userId,@Param("money")double money);
+
+    List<User> moneyTop10();
+
+    void updateNotifySz(User user);
 }

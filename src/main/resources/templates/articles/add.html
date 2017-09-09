@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <th:block th:include="/common :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}"/>
+    <script th:src="@{/lib/layui/layui.js}"></script>
+    <script th:src="@{/lib/plugin_jquery.js}"></script>
+</head>
+<body >
+
+<th:block th:include="/common :: nav(t)"></th:block>
+
+
+<div class="container" style="min-height: 700px;">
+    <ol class="breadcrumb">
+        <li><a href="#">文章</a></li>
+        <li class="active">发表</li>
+    </ol>
+
+    <form id="mainForm" class="layui-form" action="javascript:void();">
+        <div class="layui-form-item">
+            <input type="text" name="title" lay-verify="required" placeholder="请输入标题" autocomplete="off"
+                   class="layui-input"/>
+        </div>
+        <div style="height: 330px;">
+        <textarea name="content" id="mainEdit" style="display: none;"></textarea>
+        </div>
+
+
+        <div style="padding:5px;">
+            <input  class="layui-btn" lay-submit="" lay-filter='submit' value="发布"/>
+        </div>
+    </form>
+
+</div>
+<script>
+    layui.use(['form', 'layedit'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit;
+
+        layedit.build('mainEdit'); //建立编辑器
+        //监听提交
+
+        form.on('submit(submit)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            });
+
+            return false;
+        });
+
+
+    });
+
+
+</script>
+
+
+<th:block th:include="/common :: footer"/>
+</body>
+</html>
+

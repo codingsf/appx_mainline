@@ -6,7 +6,12 @@ public class MsgException extends RuntimeException {
     private HttpStatus httpStatus;
 
     public MsgException(){
+        this("系统错误");
+    }
 
+    public MsgException(String msg){
+        super(msg);
+        httpStatus = HttpStatus.BAD_REQUEST;
     }
     public MsgException(HttpStatus httpStatus){
         this.httpStatus = httpStatus;
