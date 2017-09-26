@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import top.appx.entity.ScheduleJob;
 import top.appx.entity.vo.QrtzJob;
+import top.appx.entity.ScheduleJob;
 
 /**
  * 同步任务工厂(若一个方法一次执行不完下次轮转时则等待改方法执行完后才执行下一次操作)

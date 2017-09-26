@@ -5,13 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import top.appx.entity.Article;
 import top.appx.factory.ArticleFactory;
 import top.appx.service.ArticleService;
 import top.appx.service.NotifyService;
-import top.appx.util.DateUtil;
-import top.appx.util.HttpUtil;
+import top.appx.zutil.HttpUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +26,7 @@ public class JobJuBiNewCoin {
 
     List<String> list = new ArrayList<>();
     public void execute(){
-        logger.info("执行上新检测,size="+list.size());
+   //     logger.info("执行聚币上新检测,size="+list.size());
         String str = HttpUtil.httpGet("https://www.jubi.com/coin/allcoin");
         JSONObject doc = JSONObject.parseObject(str);
         if(list.size()==0){

@@ -19,12 +19,11 @@ public class AsyncJobFactory extends QuartzJobBean {
             Object obj  = context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
 
             QrtzJob qrtzJob = (QrtzJob) obj;
-
             //获取spring上下文
             ApplicationContext applicationContext = (ApplicationContext)context.getScheduler().getContext().get("applicationContextKey");
-
             //执行调度任务
             ScheduleExecute.execute(applicationContext, qrtzJob);
+
         } catch (SchedulerException e) {
             log.error("AsyncJobFactory execute,执行失败...");
         }catch (Exception ex){

@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="../../lib/easyui/themes/default/easyui.css">
-    <link rel="stylesheet" href="../../lib/easyui/themes/icon.css">
-    <script src="../../lib/jquery.1.8.3.min.js"></script>
-    <script src="../../lib/easyui/jquery.easyui.min.js"></script>
-    <script src="../../lib/easyui/zeasyui1.0.js"></script>
-    <script src="../../lib/plugin_jquery.js"></script>
-    <script src="../../lib/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="http://appx-mainline.oss-cn-beijing.aliyuncs.com//lib/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" href="http://appx-mainline.oss-cn-beijing.aliyuncs.com//lib/easyui/themes/icon.css">
+    <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/jquery.1.8.3.min.js"></script>
+    <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/easyui/jquery.easyui.min.js"></script>
+    <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/easyui/zeasyui1.0.js"></script>
+    <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/plugin_jquery.js"></script>
+    <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/easyui/locale/easyui-lang-zh_CN.js"></script>
+
+
 
     <script src="collectParamManager.js"></script>
 </head>
@@ -47,6 +49,21 @@
                     <input name="type"  value="twitter" type="radio" />
                     推特
                 </label>
+
+                状态:
+                <label>
+                    <input name="status" value="" type="radio" checked="checked" />
+                    全部
+                </label>
+                <label>
+                    <input name="status" value="1" type="radio" />
+                    正常
+                </label>
+                <label>
+                    <input name="status" value="2" type="radio" />
+                    暂停
+                </label>
+
                 <a href="javascript:;" class="easyui-linkbutton submit" iconcls="icon-search" plain="true">查询</a>
             </form>
         </div>
@@ -189,6 +206,21 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td>
+                        状态:
+                    </td>
+                    <td>
+                        <label>
+                            <input name="status" type="radio" value="1" checked="checked">
+                            正常
+                        </label>
+                        <label>
+                            <input name="status" type="radio" value="2">
+                            暂停
+                        </label>
+                    </td>
+                </tr>
 
             </table>
         </form>

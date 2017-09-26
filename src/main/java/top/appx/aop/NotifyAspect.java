@@ -1,24 +1,24 @@
 package top.appx.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import top.appx.config.AppxConfig;
-import top.appx.entity.*;
+import top.appx.entity.Article;
+import top.appx.entity.ArticleGroup;
+import top.appx.entity.Notify;
+import top.appx.entity.User;
 import top.appx.exception.NotEnoughMoneyException;
 import top.appx.service.ArticleGroupService;
 import top.appx.service.NotifyService;
 import top.appx.service.TransferService;
 import top.appx.service.UserService;
-import top.appx.util.HttpUtil;
-import top.appx.util.StringUtil;
+import top.appx.zutil.StringUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -154,9 +154,9 @@ public class NotifyAspect {
 
     @AfterReturning(value = "execution(public * top.appx.service.impl.ArticleServiceImpl.saveIfNotExistUrl(..))",returning = "retValue")
     public void t2(JoinPoint joinPoint,boolean retValue){
-        System.out.println("捕获");
         try {
             if(retValue) {
+                System.out.println("捕获");
                 Article article = (Article) joinPoint.getArgs()[0];
                 notice(article);
             }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import top.appx.entity.Article;
 import top.appx.factory.ArticleFactory;
 import top.appx.service.ArticleService;
-import top.appx.util.HttpUtil;
+import top.appx.zutil.HttpUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +43,7 @@ public class ChbtcJob {
             list.addAll(tmp);
         }
 
-        logger.info("中比特上新检测,size="+list.size());
+      // logger.info("中比特上新检测,size="+list.size());
         for (String s : tmp) {
             if(!list.contains(s)){
                 list.add(s);

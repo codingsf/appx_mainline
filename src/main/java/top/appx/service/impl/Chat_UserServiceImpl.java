@@ -2,8 +2,8 @@ package top.appx.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.appx.dao.Chat_UserDao;
 import top.appx.entity.Chat_User;
+import top.appx.dao.Chat_UserDao;
 import top.appx.service.Chat_UserService;
 
 import java.util.Date;

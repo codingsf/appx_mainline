@@ -1,7 +1,5 @@
 package top.appx.entity.vo;
 
-import top.appx.entity.Article;
-
 import java.util.Date;
 
 public class ArticleIndexVO {

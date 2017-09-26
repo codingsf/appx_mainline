@@ -39,12 +39,27 @@ function Dg() {
             { field: "status", title: "状态", width: 100,formatter:function(val,src){
                 switch (val){
                     case 1:
-                        return "正常";
+                        return "<b>正常</b>";
                     case 2:
-                        return "暂停";
+                        return "<span style='color:gray'>暂停</span>";
                 }
                 return '-';
-            } }
+            } },
+            { field: "lastSuccessTime", title: "lastSuccessTime", width: 150,formatter:function(val,src){
+                if(src.lastErrorTime && val && new Date(src.lastErrorTime)>new Date(val)){
+                    return "<span style='color:gray'>"+val+"</span>"
+                }
+                return val;
+            } },
+            { field: "lastErrorTime", title: "lastErrorTime", width: 150,formatter:function(val,src){
+                if(src.lastSuccessTime&&val&& new Date(src.lastSuccessTime)>new Date(val)){
+                    return "<span style='color:gray;'>"+val+"</span>";
+                }
+                return val;
+
+            } },
+            { field: "errorMsg", title: "错误信息", width: 100 }
+
         );
         return columns;
     };

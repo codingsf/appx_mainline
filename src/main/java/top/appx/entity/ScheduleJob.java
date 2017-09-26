@@ -22,6 +22,33 @@ public class ScheduleJob extends BaseEntity {
     private Date createTime;
     private Date modifyTime;
     private boolean isAsync;
+    private Date lastErrorTime;
+    private Date lastSuccessTime;
+    private String errorMsg;
+
+    public Date getLastErrorTime() {
+        return lastErrorTime;
+    }
+
+    public void setLastErrorTime(Date lastErrorTime) {
+        this.lastErrorTime = lastErrorTime;
+    }
+
+    public Date getLastSuccessTime() {
+        return lastSuccessTime;
+    }
+
+    public void setLastSuccessTime(Date lastSuccessTime) {
+        this.lastSuccessTime = lastSuccessTime;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 
     public Long getId() {
         return id;

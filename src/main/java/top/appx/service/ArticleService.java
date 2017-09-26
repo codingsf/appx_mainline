@@ -2,14 +2,14 @@ package top.appx.service;
 
 import com.github.pagehelper.PageInfo;
 import top.appx.entity.Article;
-import top.appx.entity.vo.ArticleDetailVO;
 import top.appx.entity.vo.ArticleIndexVO;
+import top.appx.entity.vo.ArticleDetailVO;
 
 import java.util.List;
 
 public interface ArticleService {
-    PageInfo<Article> findPage(Object search,Integer pageNum , Integer pageSize) throws Exception;
-    PageInfo<ArticleIndexVO> findPageVO(Object search,Integer pageNum, Integer pageSize) throws Exception;
+    PageInfo<Article> findPage(Object search, Integer pageNum , Integer pageSize) throws Exception;
+    PageInfo<ArticleIndexVO> findPageVO(Object search, Integer pageNum, Integer pageSize) throws Exception;
 
     Article findById(Long id);
 

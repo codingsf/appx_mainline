@@ -2,8 +2,6 @@ package top.appx.job;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Component;
 import top.appx.entity.Article;
 import top.appx.factory.ArticleFactory;
 import top.appx.service.ArticleService;
-import top.appx.util.HttpUtil;
+import top.appx.zutil.HttpUtil;
 
 import java.util.Date;
 @Component

@@ -1,19 +1,14 @@
 package top.appx.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.appx.config.AppxConfig;
 import top.appx.dao.NotifyDao;
 import top.appx.entity.Notify;
-import top.appx.exception.MsgException;
-import top.appx.service.MailService;
 import top.appx.service.NotifyService;
-import top.appx.util.HttpUtil;
 
 import java.util.Date;
 import java.util.List;

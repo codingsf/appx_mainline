@@ -68,6 +68,15 @@ function Dg() {
 
             } },
             { field: "cookieStr", title: "cookieStr", width: 100 },
+            { field: "status", title: "状态", width: 50,formatter:function(val,src){
+                switch (val){
+                    case 1:
+                        return "<b>正常</b>";
+                    case 2:
+                        return "<span style='color:gray'>暂停</span>";
+                }
+                return '-';
+            } },
             { field: "errorMsg", title: "errorMsg", width: 100,formatter:function(val,src){
 
                 if(val) {
@@ -77,6 +86,7 @@ function Dg() {
                 }
 
             } }
+
         );
         return columns;
     };

@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import top.appx.entity.Goods;
 import top.appx.entity.User;
+import top.appx.service.UserService;
+import top.appx.entity.Goods;
 import top.appx.service.GoodsService;
 import top.appx.service.TransferService;
-import top.appx.service.UserService;
 
 @Controller
 public class UserController extends BaseController {

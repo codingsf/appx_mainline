@@ -5,16 +5,17 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import top.appx.dao.CollectParamDao;
 import top.appx.entity.Article;
 import top.appx.entity.CollectParam;
+import top.appx.exception.ArticleASelNotFoundException;
+import top.appx.exception.CookieException;
 import top.appx.factory.ArticleFactory;
 import top.appx.service.ArticleService;
 import top.appx.service.CookieService;
-import top.appx.util.DateUtil;
-import top.appx.util.StringUtil;
+import top.appx.zutil.DateUtil;
+import top.appx.zutil.StringUtil;
 
 import java.net.URI;
 import java.net.URL;
@@ -136,7 +137,7 @@ public class CollectJob {
     }
     public void execute()throws Exception{
         {
-            logger.debug("execute ============== "+this.collectParam.getName());
+       //     logger.debug("execute ============== "+this.collectParam.getName());
 
             Element doc = Jsoup.connect(collectParam.getListUrl())
                     .cookies(getCookies(collectParam.getListUrl()))
@@ -146,9 +147,9 @@ public class CollectJob {
 
             if(elements.size()==0){
                 if(doc.html().contains("您的访问过于频繁，为确认本次访问为正常用户行为，需要您协助验证")){
-                    throw new Exception("微信获取需要验证码");
+                    throw new CookieException("微信获取需要验证码");
                 }
-                throw new Exception("获取不到文章");
+                throw new ArticleASelNotFoundException("获取不到文章");
             }
             for(int i=elements.size()-1;i>=0;i--){
                 Element element = elements.get(i);

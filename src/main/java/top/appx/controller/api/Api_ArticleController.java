@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import top.appx.controller.BaseController;
 import top.appx.entity.Article;
 import top.appx.service.ArticleService;
-import top.appx.util.ResponseMap;
+import top.appx.zutil.ResponseMap;
 
 import java.util.List;
 

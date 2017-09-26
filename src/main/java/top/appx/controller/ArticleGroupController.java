@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.appx.entity.Article;
-import top.appx.entity.ArticleGroup;
 import top.appx.entity.User;
 import top.appx.entity.vo.ArticleGroupVO;
 import top.appx.exception.NotFoundMsgException;

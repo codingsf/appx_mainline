@@ -11,7 +11,7 @@
     </style>
 </head>
 
-<body style="padding-top: 80px;    background-color: #f0f0f0;">
+<body style="background-color: #f0f0f0;">
 
 <th:block th:include="/common :: nav(index)" />
 
@@ -37,7 +37,10 @@
                             <td>
                                 <a class="article" th:href="@{'/articles/'+ *{id}}" th:utext="*{title}"></a>
                                 (<a style="color:gray;" th:href="@{'/articleGroups/'+*{articleGroupId}}" th:text="*{articleGroupName}"></a>)
-                                <span style="font-style: italic;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                                <th:block th:if="*{createTime}">
+                                    <span style="font-style: italic;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>
+                                </th:block>
+
                             </td>
                         </tr>
                     </table>
@@ -75,7 +78,9 @@
                                         (<span th:text="*{title}"></span>)
                                         : <span style="color:red;" th:text="*{'+'+money}"></span>
                                     </th:block>
-                                    (<span style="color:gray;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>)
+                                    <th:block th:if="#{createTime}">
+                                        (<span style="color:gray;" th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></span>)
+                                    </th:block>
                                 </li>
                             </ul>
                             <div style="text-align: right;">

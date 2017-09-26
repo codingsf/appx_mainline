@@ -2,13 +2,12 @@ package top.appx.ws;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
-import top.appx.config.ApplicationContextStatic;
 import top.appx.entity.Chat_User;
+import top.appx.config.ApplicationContextStatic;
 import top.appx.entity.User;
 import top.appx.service.Chat_UserService;
 import top.appx.service.UserService;
-import top.appx.util.ResponseMap;
+import top.appx.zutil.ResponseMap;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;

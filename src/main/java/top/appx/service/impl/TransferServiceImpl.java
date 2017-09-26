@@ -5,13 +5,13 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.appx.dao.TransferDao;
-import top.appx.dao.UserDao;
 import top.appx.entity.Transfer;
 import top.appx.entity.User;
 import top.appx.entity.vo.TransferVO;
 import top.appx.exception.MsgException;
 import top.appx.exception.NotEnoughMoneyException;
+import top.appx.dao.TransferDao;
+import top.appx.dao.UserDao;
 import top.appx.service.TransferService;
 
 import java.util.Date;

@@ -3,9 +3,9 @@ package top.appx.controller.api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.appx.controller.BaseController;
 import top.appx.entity.Cookie;
 import top.appx.service.CookieService;
+import top.appx.controller.BaseController;
 
 import java.util.List;
 

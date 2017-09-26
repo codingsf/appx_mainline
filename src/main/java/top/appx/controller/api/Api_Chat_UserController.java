@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import top.appx.entity.Chat_Group;
 import top.appx.entity.Chat_User;
 import top.appx.entity.User;
+import top.appx.service.UserService;
 import top.appx.service.Chat_GroupService;
 import top.appx.service.Chat_UserService;
-import top.appx.service.UserService;
-import top.appx.util.ResponseMap;
+import top.appx.zutil.ResponseMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Api_Chat_UserController {
         User user = (User)subject.getPrincipal();
         Object mine = null;
         if(user==null){
-            mine =ResponseMap.instance().p("username","游客")
+            mine = ResponseMap.instance().p("username","游客")
                     .p("id",0)
                     .p("status","online")
                     .p("sign","我就是我,不一样的我")

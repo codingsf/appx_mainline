@@ -1,22 +1,11 @@
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
 import org.junit.Test;
-import sun.security.ssl.SSLSocketImpl;
-import top.appx.util.DateUtil;
-import top.appx.util.HttpUtil;
+import top.appx.zutil.HttpUtil;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.*;
-import java.util.Date;
 
 import static com.sun.webkit.network.URLs.newURL;
 
@@ -25,10 +14,7 @@ public class T1 {
     @Test
     public void test1()throws Exception{
 
-        String str=  HttpUtil.httpPost("https://twitter.com","");
-
-       //String str = Jsoup.connect("https://twitter.com").proxy("47.94.143.211",8118).get().html();
-      //  System.out.println(str);
+        String str = HttpUtil.httpGet("https://btc018.com/service/ourService.html?id=1");
         System.out.println(str);
 
 

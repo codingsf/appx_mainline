@@ -1,7 +1,6 @@
 package top.appx.service;
 
 import com.github.pagehelper.PageInfo;
-import top.appx.entity.Transfer;
 import top.appx.entity.vo.TransferVO;
 
 import java.util.List;

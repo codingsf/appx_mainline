@@ -13,7 +13,10 @@
         <if test="type!=null and type.length()!=0">
             and type=#{type}
         </if>
-        order by id desc
+        <if test="status">
+            and status=#{status}
+        </if>
+        order by status,id desc
     </select>
 
     <sql id="insertSql">
@@ -25,9 +28,9 @@
         timeSel,
         contentSel,
         articleGroupFlag,
-        type,cookieStr,lastErrorTime,lastSuccessTime,createTime,modifyTime,name,remark,cron)
+        type,cookieStr,lastErrorTime,lastSuccessTime,createTime,modifyTime,name,remark,cron,status)
         values(#{twitterName},#{listUrl},#{articleASel},#{titleSel},#{timeSel},#{contentSel},#{articleGroupFlag},
-        #{type},#{cookieStr},#{lastErrorTime},#{lastSuccessTime},#{createTime},#{modifyTime},#{name},#{remark},#{cron})
+        #{type},#{cookieStr},#{lastErrorTime},#{lastSuccessTime},#{createTime},#{modifyTime},#{name},#{remark},#{cron},1)
     </sql>
 
     <select id="insert">
@@ -59,7 +62,8 @@
         name = #{name},
         remark = #{remark},
         errorMsg = null,
-        cron = #{cron}
+        cron = #{cron},
+        status = #{status}
         where id=#{id}
     </update>
 

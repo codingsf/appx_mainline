@@ -51,6 +51,8 @@
                 window.parent.location.reload();
             },
             error:function(data){
+                console.log(data);
+
                 if(data.responseText){
                     layer.msg(data.responseText);
                 }else{

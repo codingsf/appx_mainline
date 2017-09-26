@@ -1,10 +1,60 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <title>Bottom Painter Demo</title>
+    <script src="http://www.hightopo.com/guide/lib/core/ht.js"></script>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <style type="text/css">
+        .main {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
-this is t1.html
+<script type="text/javascript">
+    var gv = new ht.graph.GraphView();
+
+    var node = new ht.Node();
+    node.setPosition(50, 50);
+    node.setName('一个Node');
+
+    gv.getDataModel().add(node);
+
+    var view = gv.getView();
+    view.className = 'main';
+    document.body.appendChild(view);
+
+    gv.addBottomPainter(function(g) {//g为CanvasRenderingContext2D实例
+        var viewRect = gv.getViewRect();// 获取可视范围
+        var zoom = gv.getZoom();
+
+        var startX = viewRect.x;
+        var endX = startX + viewRect.width;
+        var startY = viewRect.y;
+        var endY = startY + viewRect.height;
+
+        g.save();
+        g.beginPath();
+        g.fillStyle = "#ddd";
+        // 绘制马赛克，只绘制灰色方块，白色不方块绘制以显示网页的白色背景
+        for (var i = startX, ii = 0; i < endX; i += 10 / zoom, ii++) {
+            for (var j = startY, jj = 0; j < endY; j += 10 / zoom, jj++) {
+                // 绘制规则为奇数行绘制奇数列方块，在偶数行中绘制偶数列方块
+                if ((ii % 2 != 0 && jj % 2 != 0) || (ii % 2 == 0 && jj % 2 == 0)) {
+                    g.rect(i, j, 10 / zoom, 10 / zoom);
+                }
+            }
+        }
+        g.fill();
+
+        g.restore();
+    });
+</script>
+<div style="display: none;"><script src="http://s23.cnzz.com/z_stat.php?id=1000279011&web_id=1000279011" language="JavaScript"></script></div>
 </body>
 </html>

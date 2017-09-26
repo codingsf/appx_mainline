@@ -1,8 +1,5 @@
 package top.appx.dao;
 
-import com.github.pagehelper.PageInfo;
-import top.appx.entity.CollectParam;
-
 import java.io.Serializable;
 import java.util.List;
 

@@ -6,20 +6,26 @@
         <meta charset="UTF-8"/>
         <title th:text="#{webTitle}"></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="description" content="这是一个炒币资讯订阅网站,将最新的炒币资讯(各大交易所上公告,推特,微信,等等)第一时间通知给你" />
-        <meta name="keywords" content="燎火,燎火新闻网,新闻,资讯,软件交流" />
-        <script src="/lib/jquery-3.2.1.min.js"></script>
+        <meta name="description" content="资讯订阅网站" />
+        <meta name="keywords" content="燎火,资讯,软件交流" />
+    <!--    <script src="/lib/jquery-3.2.1.min.js"></script>
         <link rel="stylesheet" href="/lib/bootstrap-3.3.7/css/bootstrap.css"/>
         <script src="/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
         <link rel="stylesheet" href="/css/common.css" />
-        <script src="/lib/jquery.toTop.min.js"></script>
+        <script src="/lib/jquery.toTop.min.js"></script>-->
+
+        <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/jquery-3.2.1.min.js"></script>
+        <link rel="stylesheet" href="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/bootstrap-3.3.7/css/bootstrap.css"/>
+        <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/bootstrap-3.3.7/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="/css/common.css" />
+        <script src="http://appx-mainline.oss-cn-beijing.aliyuncs.com/lib/jquery.toTop.min.js"></script>
     </head>
 <body>
 
 <nav th:fragment="nav(name)">
     <style type="text/css">
         body{
-            padding-top: 80px;
+            padding-top:80px;
         }
     </style>
     <nav id="navigation" class="navbar navbar-inverse navbar-fixed-top">
@@ -48,11 +54,10 @@
                             <a th:href="@{/admin}">管理</a>
                         </li>
                     </shiro:hasAnyRoles>
-            <!--        <script>
-                        if(window.parent==window){
-                            document.write('<li><a href="/chat">聊天</a></li>')
-                        }
-                    </script>-->
+
+                    <li>
+                        <a target="_blank" href="//trade.appx.top">搬砖</a>
+                    </li>
 
                     <li th:class="${name=='help'?'active':''}">
                         <a href="/help">帮助</a>
@@ -103,19 +108,20 @@
     <footer >
         <div class="container" style="margin: 30px;">
             <h4 style="padding:10px;">
-                <a href='http://www.jubi.com/i_obziuj'>聚币网</a> |
-                <a href='http://www.huobi.com'>火币网</a> |
-                <a href='http://yunbi.com'>云币网</a> |
-                <a href='https://bter.com/ref/360698'>比特儿</a> |
-                <a href='http://t.cn/RNv5ACl'>币久网</a> |
-                <a href="http://www.btc38.com/">比特时代</a> |
-                <a href="http://www.bitstar.com/?id=106790">比特星</a>
+                <a href="https://www.bitfinex.com">Bitfinex</a> |
+                <a href="https://bittrex.com">Bittrex</a> |
+                <a href="https://poloniex.com">Polonie</a> |
+                <a href="https://coincheck.com">Coincheck</a> |
+                <a href="https://www.bitmex.com">Bitmex</a> |
+                <a href="https://www.kraken.com">Kraken</a> |
+                <a href="https://www.allcoin.com/">AllCoin</a>
+
             </h4>
 
             <h5 style="color:#bbb;max-width: 400px;">
                 本网站为技术性交流网站,提供新闻咨询订阅功能,后面会逐渐开发更多其他的功能,敬请期待
             </h5>
-            <a href="http://www.miitbeian.gov.cn">皖ICP备15015583号-2</a>
+            <a href="//www.miitbeian.gov.cn">皖ICP备15015583号-2</a>
         </div>
         <script src="/js/seo.js"></script>
     </footer>

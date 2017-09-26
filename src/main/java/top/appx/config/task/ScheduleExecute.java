@@ -3,26 +3,22 @@ package top.appx.config.task;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.client.RestTemplate;
-import top.appx.config.ApplicationContextStatic;
-import top.appx.dao.BaseDao;
-import top.appx.dao.CollectParamDao;
+import top.appx.dao.ScheduleJobDao;
 import top.appx.entity.CollectParam;
 import top.appx.entity.ScheduleJob;
 import top.appx.entity.vo.QrtzJob;
+import top.appx.exception.CookieException;
+import top.appx.exception.NormalException;
 import top.appx.job.CollectJob;
 import top.appx.job.CollectJob_Twitter;
-import top.appx.job.CollectJob_Weichat;
-import top.appx.service.ArticleService;
-import top.appx.util.StringUtil;
+import top.appx.dao.CollectParamDao;
+import top.appx.zutil.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -34,6 +30,7 @@ public class ScheduleExecute {
 
     protected static final Logger log = LoggerFactory.getLogger(ScheduleExecute.class);
     private static CollectParamDao collectParamDao;
+    private static ScheduleJobDao scheduleJobDao;
 
     public static void execute(ApplicationContext applicationContext, QrtzJob qrtzJob){
         long startTime = System.currentTimeMillis();
@@ -57,7 +54,6 @@ public class ScheduleExecute {
      */
     public static void invokMethod(QrtzJob qrtzJob,ApplicationContext applicationContext) {
 
-
         Object object = null;
         Class<?> clazz = null;
 
@@ -68,60 +64,55 @@ public class ScheduleExecute {
                 object = objMap.get(scheduleJob.getBeanClass());
             }
             else if (StringUtils.isNotBlank(scheduleJob.getBeanClass())) {
-                try {
+
+                try{
                     clazz = Class.forName(scheduleJob.getBeanClass());
-                    try {
 
-                        object = applicationContext.getBean(clazz);
-                    } catch (Exception e0) {
-                        System.out.println("错误:" + e0.getMessage());
-                    }
-
+                    object = applicationContext.getBean(clazz);
                     if (object == null) {
-                        object = clazz.newInstance();
+                        if(objMap.containsKey(scheduleJob.getBeanClass())){
+                            object = objMap.get(scheduleJob.getBeanClass());
+                        }else{
+                            object = clazz.newInstance();
+                            objMap.put(scheduleJob.getBeanClass(), object);
+                        }
                     }
-                    objMap.put(scheduleJob.getBeanClass(), object);
-                } catch (Exception e) {
-                    log.error("任务名称 = [" + scheduleJob.getName()
-                            + "]---出错," + e.getMessage());
-                }
-            }
-                if (object == null) {
-                    log.error("任务名称 = [" + qrtzJob.getName()
-                            + "]---------------未启动成功，请检查是否配置正确！！！");
-                    return;
-                }
-                clazz = object.getClass();
-                Method method = null;
-                try {
+
+                    clazz = object.getClass();
+
+
+
+                    Method method = null;
+
                     if(StringUtil.isNullOrEmpty(scheduleJob.getParams())){
                         method = clazz.getMethod(scheduleJob.getMethodName());
                     }else{
                         method = clazz.getDeclaredMethod(scheduleJob.getMethodName(), String.class);
                     }
 
-                } catch (NoSuchMethodException e) {
-                    log.error("任务名称 = [" + scheduleJob.getName()
-                            + "]---------------未启动成功，方法名设置错误！！！");
-                } catch (SecurityException e) {
-                    log.error(e.getMessage(), e);
-                }
-
-
-                if (method != null) {
-                    try {
-                        ReflectionUtils.makeAccessible(method);
-                        if(StringUtils.isNotBlank(scheduleJob.getParams())){
-                            method.invoke(object, scheduleJob.getParams());
-                        }else{
-                            method.invoke(object);
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        log.error("任务名称 = [" + scheduleJob.getName() + "]----------执行出错 "+e.getTargetException().getMessage());
+                    if (method != null) {
+                            ReflectionUtils.makeAccessible(method);
+                            if(StringUtils.isNotBlank(scheduleJob.getParams())){
+                                method.invoke(object, scheduleJob.getParams());
+                            }else{
+                                method.invoke(object);
+                            }
                     }
+                    scheduleJob.setErrorMsg("");
+                    scheduleJob.setLastSuccessTime(new Date());
                 }
+                catch (Exception ex){
+                    scheduleJob.setLastErrorTime(new Date());
+                    scheduleJob.setErrorMsg(ex.getMessage());
+                }finally {
+
+                    if(scheduleJobDao==null){
+                        scheduleJobDao = applicationContext.getBean(ScheduleJobDao.class);
+                    }
+                    scheduleJobDao.updateExecuteResult(scheduleJob);
+                }
+            }
+
             //#endregion schduleJob任务处理
         }
 
@@ -151,7 +142,7 @@ public class ScheduleExecute {
             }
             try {
                 collectJob.execute();
-                System.out.println("collectParam 任务处理");
+            //    System.out.println("collectParam 任务处理");
 
                 collectParam.setLastSuccessTime(new Date());
                 collectParamDao.updateLastSuccess(collectParam);
@@ -159,21 +150,16 @@ public class ScheduleExecute {
 
             }catch (Exception ex){
                 collectParam.setLastErrorTime(new Date());
-                log.error(qrtzJob.getName()+"执行出错",ex);
+
+                if(!(ex instanceof NormalException)){
+                    log.error(qrtzJob.getName()+"执行出错",ex);
+                }
                 collectParam.setErrorMsg(ex.getMessage());
                 collectParamDao.updateLastError(collectParam);
-
             }
 
             //#endregion collectParam任务处理
         }
-
-
-
-
-
-
-
 
      //   log.debug("任务名称 = [" + scheduleJob.getName() + "]----------启动成功");
     }

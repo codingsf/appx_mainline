@@ -1,7 +1,5 @@
 package top.appx.entity;
 
-import top.appx.entity.BaseEntity;
-
 import java.util.Date;
 
 public class Chat_User extends BaseEntity {

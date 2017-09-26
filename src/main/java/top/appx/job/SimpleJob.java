@@ -6,12 +6,11 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import top.appx.entity.Article;
 import top.appx.factory.ArticleFactory;
 import top.appx.job.vo.JobParam;
 import top.appx.service.ArticleService;
-import top.appx.util.DateUtil;
+import top.appx.zutil.DateUtil;
 
 import java.net.URI;
 import java.net.URL;

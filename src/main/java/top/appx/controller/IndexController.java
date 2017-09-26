@@ -14,12 +14,10 @@ import top.appx.entity.Article;
 import top.appx.entity.User;
 import top.appx.entity.vo.ArticleIndexVO;
 import top.appx.service.ArticleService;
-import top.appx.service.TransferService;
 import top.appx.service.UserService;
+import top.appx.service.TransferService;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -93,6 +91,10 @@ public class IndexController extends BaseController {
         return "/articles/search";
     }
 
+    @RequestMapping("/nav")
+    public String nav(){
+        return "/nav";
+    }
 
 
 

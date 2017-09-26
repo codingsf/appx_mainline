@@ -1,16 +1,12 @@
 package top.appx.controller.api;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.appx.controller.BaseController;
 import top.appx.entity.Permission;
-import top.appx.entity.PermissionType;
-import top.appx.entity.User;
 import top.appx.service.PermissionService;
-import top.appx.util.ResponseMap;
+import top.appx.controller.BaseController;
+import top.appx.zutil.ResponseMap;
 
 import java.util.ArrayList;
 import java.util.List;

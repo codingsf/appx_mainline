@@ -6,8 +6,8 @@
 	<groupId>top.appx</groupId>
 	<artifactId>mainline</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
 
+    <packaging>jar</packaging>
 
 	<name>mainline</name>
 	<description>www.appx.top网站</description>
@@ -128,6 +128,12 @@
 			<artifactId>spring-session</artifactId>
 		</dependency>
 
+
+		<dependency>
+			<artifactId>zutil</artifactId>
+			<groupId>top.appx</groupId>
+			<version>1.0.0</version>
+		</dependency>
 
 	<!--	<dependency>
 			<groupId>org.springframework.boot</groupId>

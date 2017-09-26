@@ -1,23 +1,26 @@
 package top.appx.job;
 
 import com.alibaba.fastjson.JSONObject;
-import groovy.transform.Synchronized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import top.appx.service.MailService;
 import top.appx.config.AppxConfig;
 import top.appx.entity.Notify;
 import top.appx.entity.User;
-import top.appx.service.MailService;
 import top.appx.service.NotifyService;
 import top.appx.service.TransferService;
 import top.appx.service.UserService;
-import top.appx.util.HttpUtil;
+import top.appx.zutil.HttpUtil;
 
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class Job_NotifyDeal {
@@ -33,15 +36,29 @@ public class Job_NotifyDeal {
     @Autowired
     private TransferService transferService;
 
+
+    private static BlockingQueue<Runnable> queues = new ArrayBlockingQueue<Runnable>(2);
+    private static ThreadPoolExecutor threadPool = new ThreadPoolExecutor(1,20,0L, TimeUnit.SECONDS,queues);
+
+
+
     @Autowired
     private UserService userService;
 
+    //TODO 如果两台服务器同时执行可能会多发消息
     public synchronized void  execute(){
        List<Notify> notifyList = notifyService.waitDeal();
        notifyList.forEach(notify -> {
-               deal(notify);
-                notify.setDealTime(new Date());
-               notifyService.dealResult(notify);
+
+           threadPool.execute(new Runnable() {
+               @Override
+               public void run() {
+                   System.out.println("开始处理:"+notify.getId());
+                   deal(notify);
+                   notify.setDealTime(new Date());
+                   notifyService.dealResult(notify);
+               }
+           });
        });
     }
 
@@ -57,6 +74,7 @@ public class Job_NotifyDeal {
             switch (notify.getType()){
                 case "qq":
                     String msg = notify.getContent();
+                    msg = URLEncoder.encode(msg,"utf-8");
                     String result = null;
                     if(notify.getTarget().startsWith("group:")){
                         result = HttpUtil.httpPost("http://"+appxConfig.getQqreboot()+"/send_group_msg", "group_id=" + notify.getTarget().substring("group:".length()) + "&message=" + msg);

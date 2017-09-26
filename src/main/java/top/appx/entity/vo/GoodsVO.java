@@ -1,6 +1,5 @@
 package top.appx.entity.vo;
 
-import top.appx.entity.BaseEntity;
 import top.appx.entity.Goods;
 
 public class GoodsVO extends Goods {

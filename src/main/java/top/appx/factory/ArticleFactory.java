@@ -5,7 +5,7 @@ import top.appx.entity.Article;
 import java.util.Date;
 
 public class ArticleFactory {
-    public static Article createArticle(String flag,String title, String content, String url,Date occTime){
+    public static Article createArticle(String flag, String title, String content, String url, Date occTime){
         Article article = new Article();
         article.setTitle(title);
         article.setContent(content);

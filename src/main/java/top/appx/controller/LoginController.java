@@ -14,15 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import top.appx.entity.Notify;
-import top.appx.entity.User;
 import top.appx.exception.EmailExistException;
 import top.appx.exception.MsgException;
 import top.appx.service.MailService;
+import top.appx.entity.Notify;
+import top.appx.entity.User;
 import top.appx.service.NotifyService;
 import top.appx.service.UserService;
 import top.appx.shiro.QQLoginToken;
-import top.appx.util.StringUtil;
+import top.appx.zutil.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -4,28 +4,16 @@
 >
 <head>
     <th:block th:include="/common :: head"></th:block>
+    <script src="/js/nav.js"></script>
+    <script src="/lib/include.js"></script>
+    <link rel="stylesheet" href="/css/articles/detail.css"/>
 </head>
-<style type="text/css">
-    img {
-        max-width: 100%;
-    }
-
-    .block {
-        margin-top: 20px;
-        padding: 30px;
-        background: #fbfbfb;
-        box-shadow: 1px 1px 1px #e5e5e5;
-    }
-
-    svg {
-        width: 25px;
-        height: 25px;
-    }
-
-</style>
 <body style="background-color: #f0f0f0;">
 
+<include src="../nav"></include>
+<!--
 <th:block th:include="/common :: nav(articles_detail)"></th:block>
+-->
 
 <div class="container">
     <div class="row">

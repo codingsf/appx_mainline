@@ -3,11 +3,11 @@ package top.appx.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.appx.exception.MsgException;
 import top.appx.dao.GoodsDao;
 import top.appx.dao.TransferDao;
 import top.appx.entity.Goods;
 import top.appx.entity.vo.GoodsVO;
-import top.appx.exception.MsgException;
 import top.appx.service.GoodsService;
 import top.appx.service.TransferService;
 

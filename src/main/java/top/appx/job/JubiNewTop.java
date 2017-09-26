@@ -25,7 +25,7 @@ public class JubiNewTop {
     private ArticleService articleService;
     List<String> list = new ArrayList<>();
     public void execute()throws Exception{
-        logger.info("执行横幅检测,size="+list.size());
+      //  logger.info("执行横幅检测,size="+list.size());
         Document doc = Jsoup.connect("https://www.jubi.com").get();
         Elements elements = doc.select(".my-carousel-inner .item");
         List<String> strArr = new ArrayList<>();

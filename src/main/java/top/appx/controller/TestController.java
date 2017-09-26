@@ -15,10 +15,5 @@ import java.util.Map;
 
 @Controller
 public class TestController {
-    @RequestMapping("/t1")
-    @Cacheable(value = "aa",key="aa")
-    public String t1(){
-        return "/t1";
-    }
 
 }

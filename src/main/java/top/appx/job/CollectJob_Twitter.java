@@ -5,19 +5,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import top.appx.config.AppxConfig;
 import top.appx.entity.Article;
 import top.appx.entity.CollectParam;
 import top.appx.factory.ArticleFactory;
-import top.appx.service.ArticleService;
-import top.appx.util.DateUtil;
-import top.appx.util.StringUtil;
+import top.appx.zutil.DateUtil;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.util.Date;
 
 public class CollectJob_Twitter extends CollectJob  {

@@ -8,7 +8,12 @@
     </insert>
 
     <select id="find" resultType="ScheduleJob">
-      select * from scheduleJob
+      select * from scheduleJob where 1=1
+
+      <if test="status">
+          and status=#{status}
+      </if>
+        order by status,id desc
     </select>
     <select id="findByName" resultType="ScheduleJob">
         select * from scheduleJob where name=#{name}
@@ -17,6 +22,15 @@
     <select id="selectByPrimaryKey" resultType="ScheduleJob">
       select * from scheduleJob where id=#{id}
     </select>
+
+    <!--更新执行结果 -->
+    <update id="updateExecuteResult">
+        update scheduleJob
+        set lastSuccessTime=#{lastSuccessTime},
+        lastErrorTime=#{lastErrorTime},
+        errorMsg = #{errorMsg}
+        where id=#{id}
+    </update>
     
     <update id="updateByPrimaryKey">
         update scheduleJob set name=#{name},
@@ -37,6 +51,10 @@
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
+    </delete>
+    
+    <delete id="deleteByPrimaryKey">
+        delete from scheduleJob where id=#{id}
     </delete>
 
 

@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.appx.dao.ScheduleJobDao;
-import top.appx.entity.ScheduleJob;
 import top.appx.entity.vo.QrtzJob;
 import top.appx.exception.NameExistException;
+import top.appx.dao.ScheduleJobDao;
+import top.appx.entity.ScheduleJob;
 import top.appx.service.ScheduleJobService;
 import top.appx.util.ScheduleUtil;
 
@@ -46,9 +46,9 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
     }
 
     @Override
-    public PageInfo<ScheduleJob> findPage(Integer pageNum, Integer pageSize) {
+    public PageInfo<ScheduleJob> findPage(Object search,Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<ScheduleJob> list = scheduleJobDao.find();
+        List<ScheduleJob> list = scheduleJobDao.find(search);
         return new PageInfo<>(list);
     }
 

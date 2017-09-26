@@ -1,4 +1,3 @@
-import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,18 +12,13 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContexts;
-import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.junit.Test;
-import top.appx.job.JobJuBiNewCoin;
-import top.appx.util.HttpUtil;
 
 import javax.net.ssl.SSLContext;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Socket;
@@ -33,6 +27,9 @@ import java.util.Map;
 
 public class T2 {
 
+    public void ttt(){
+
+    }
     @Test
     public void t3()throws Exception{
         String str = Jsoup.connect("https://twitter.com")

@@ -8,9 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import top.appx.service.MailService;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
 
 @Service
 public class MailServiceImpl implements MailService {

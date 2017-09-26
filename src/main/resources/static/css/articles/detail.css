@@ -1,0 +1,18 @@
+img {
+    max-width: 100%;
+}
+
+.block {
+    margin-top: 20px;
+    padding: 30px;
+    background: #fbfbfb;
+    box-shadow: 1px 1px 1px #e5e5e5;
+}
+
+svg {
+    width: 25px;
+    height: 25px;
+}
+body{
+    padding-top: 80px;
+}

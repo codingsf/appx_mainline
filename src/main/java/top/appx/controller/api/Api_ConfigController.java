@@ -3,8 +3,8 @@ package top.appx.controller.api;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.appx.entity.Config;
 import top.appx.service.ConfigService;
+import top.appx.entity.Config;
 
 import java.util.List;
 

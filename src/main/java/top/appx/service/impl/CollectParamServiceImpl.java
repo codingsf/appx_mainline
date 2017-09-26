@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.appx.dao.CollectParamDao;
 import top.appx.entity.CollectParam;
-import top.appx.entity.ScheduleJob;
 import top.appx.entity.vo.QrtzJob;
 import top.appx.service.CollectParamService;
+import top.appx.dao.CollectParamDao;
 import top.appx.util.ScheduleUtil;
 
 import java.util.Date;
@@ -26,7 +25,7 @@ public class CollectParamServiceImpl implements CollectParamService {
     private SchedulerFactoryBean schedulerFactoryBean;
 
     @Override
-    public PageInfo<CollectParam> findPage(Object search,int pageNum, int pageSize) {
+    public PageInfo<CollectParam> findPage(Object search, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<CollectParam> collectParamList =collectParamDao.find(search);
         return new PageInfo<CollectParam>(collectParamList);

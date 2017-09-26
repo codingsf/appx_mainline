@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 import top.appx.entity.Article;
 import top.appx.factory.ArticleFactory;
 import top.appx.service.ArticleService;
-import top.appx.util.DateUtil;
-import top.appx.util.HttpUtil;
+import top.appx.zutil.HttpUtil;
 
 import java.util.Date;
 

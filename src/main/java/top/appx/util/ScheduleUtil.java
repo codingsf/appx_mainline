@@ -1,12 +1,12 @@
 package top.appx.util;
 
 import org.quartz.*;
+import top.appx.entity.vo.QrtzJob;
 import top.appx.common.Constant;
 import top.appx.config.task.AsyncJobFactory;
 import top.appx.config.task.ScheduleExecute;
 import top.appx.config.task.SyncJobFactory;
 import top.appx.entity.ScheduleJob;
-import top.appx.entity.vo.QrtzJob;
 
 public class ScheduleUtil {
     /**

@@ -8,10 +8,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import top.appx.dao.PermissionDao;
 import top.appx.dao.RoleDao;
-import top.appx.dao.UserDao;
 import top.appx.entity.Permission;
+import top.appx.dao.PermissionDao;
+import top.appx.dao.UserDao;
 import top.appx.entity.Role;
 import top.appx.entity.User;
 

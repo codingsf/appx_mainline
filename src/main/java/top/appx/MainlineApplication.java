@@ -6,11 +6,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import top.appx.zutil.HttpUtil;
+
+import java.net.URLEncoder;
 
 @SpringBootApplication
 //@EnableScheduling
@@ -26,6 +26,14 @@ public class MainlineApplication extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
+		try {
+
+			String str = HttpUtil.httpPost("http://news.appx.top:5700/send_private_msg", "user_id=799378666&message="+URLEncoder.encode("程序运行","utf-8") );
+			System.out.println(str);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		SpringApplication.run(MainlineApplication.class, args);
 	}
 

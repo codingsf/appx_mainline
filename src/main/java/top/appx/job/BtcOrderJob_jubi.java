@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import top.appx.entity.BtcOrder;
 import top.appx.service.BtcOrderService;
-import top.appx.util.HttpUtil;
+import top.appx.zutil.HttpUtil;
 
 import java.util.Date;
 
@@ -30,7 +30,7 @@ public class BtcOrderJob_jubi {
         });
 
         Date endDate = new Date();
-        logger.info("订单获取耗时:"+(endDate.getTime()-date.getTime()));
+     //   logger.info("订单获取耗时:"+(endDate.getTime()-date.getTime()));
 
     }
     private void deal(String coin){
