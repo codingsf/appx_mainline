@@ -10,7 +10,7 @@ public class AppxConfig {
     private String proxy_host;
     private Integer proxy_port;
     private String qqgroupids;
-    private String qqreboot;
+    private String qqrobot;
 
     public String getDomain() {
         return domain;
@@ -54,11 +54,11 @@ public class AppxConfig {
         this.qqgroupids = qqgroupids;
     }
 
-    public String getQqreboot() {
-        return qqreboot;
+    public String getQqrobot() {
+        return qqrobot;
     }
 
-    public void setQqreboot(String qqreboot) {
-        this.qqreboot = qqreboot;
+    public void setQqrobot(String qqrobot) {
+        this.qqrobot = qqrobot;
     }
 }

@@ -77,9 +77,9 @@ public class Job_NotifyDeal {
                     msg = URLEncoder.encode(msg,"utf-8");
                     String result = null;
                     if(notify.getTarget().startsWith("group:")){
-                        result = HttpUtil.httpPost("http://"+appxConfig.getQqreboot()+"/send_group_msg", "group_id=" + notify.getTarget().substring("group:".length()) + "&message=" + msg);
+                        result = HttpUtil.httpPost("http://"+appxConfig.getQqrobot()+"/send_group_msg", "group_id=" + notify.getTarget().substring("group:".length()) + "&message=" + msg);
                     }else{
-                        result = HttpUtil.httpPost("http://"+appxConfig.getQqreboot()+"/send_private_msg", "user_id=" + notify.getTarget() + "&message=" + msg);
+                        result = HttpUtil.httpPost("http://"+appxConfig.getQqrobot()+"/send_private_msg", "user_id=" + notify.getTarget() + "&message=" + msg);
                     }
                     String status = JSONObject.parseObject(result).getString("status");
                     if(!"ok".equals(status)){
